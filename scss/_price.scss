@@ -1,0 +1,39 @@
+.services {
+  &__container {
+    padding-bottom: 120px;
+  }
+  &__title {
+    margin-bottom: 60px;
+  }
+
+  .accordion-item {
+    border-bottom: 3px solid #62ccff;
+    margin-bottom: 10px;
+  }
+
+  .accordion-header {
+    cursor: pointer;
+    padding: 10px;
+    background: #f0f0f0;
+    transition: 0.2s ease;
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  .accordion-content {
+    background-color: #62ccff;
+    font-size: 24px;
+    font-weight: 400;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 10px;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+  }
+
+  .accordion-item.active .accordion-content {
+    max-height: 500px; /* достаточно большое значение, больше содержимого */
+    opacity: 1;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 1200px; /* 3 изображения по 200px */
+  margin: 40px auto;
+  overflow: hidden;
+}
+
+.carousel-track-wrapper {
+  overflow: hidden;
+  width: 1200px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-item {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.arrow {
+  background-color: #ccc;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}

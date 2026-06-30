@@ -1,0 +1,58 @@
+.examples {
+  &__container {
+    // padding-left: 20px;
+    // padding-right: 20px;
+    margin: 0 auto;
+    padding-top: 100px;
+    margin-bottom: 80px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .flex-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .compare-container {
+    position: relative;
+    width: 900px; /* Задай ширину фото */
+    height: 500px; /* И высоту под размер фото */
+    overflow: hidden;
+  }
+
+  .compare-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .after-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%; /* начальное значение */
+    overflow: hidden;
+  }
+
+  .slider-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    background: black;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+}
