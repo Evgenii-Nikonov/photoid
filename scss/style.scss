@@ -454,11 +454,7 @@ section[id] {
   width: 100%;
   max-width: 420px;
   height: 480px;
-  background: #fff;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-card);
-  object-fit: cover;
-  object-position: top center;
+  background: transparent;
 }
 
 /* ===== Advantages ===== */
