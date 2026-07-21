@@ -49,6 +49,7 @@ body {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -59,6 +60,11 @@ body {
   color: var(--color-text);
   background: var(--color-white);
   overflow-x: hidden;
+}
+
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 section[id] {
@@ -380,7 +386,12 @@ section[id] {
   align-items: center;
   gap: 40px;
 }
+.hero__text {
+  min-width: 0;
+}
+
 .hero__title {
+  overflow-wrap: break-word;
   font-size: clamp(34px, 4.6vw, 56px);
   font-weight: 700;
   color: var(--color-text);
@@ -436,6 +447,7 @@ section[id] {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  min-width: 0;
   height: 100%;
 }
 .hero__media-blob {
@@ -1296,7 +1308,7 @@ section[id] {
   .main-nav {
     position: fixed;
     top: 0;
-    right: 0;
+    right: 30px;
     height: 100vh;
     width: min(86vw, 380px);
     background: #fff;
@@ -1452,7 +1464,7 @@ section[id] {
     width: 100%;
   }
   .hero__image {
-    max-width: 280px;
+    max-width: min(280px, 100%);
     height: 340px;
   }
 
