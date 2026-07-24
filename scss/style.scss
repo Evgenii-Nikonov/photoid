@@ -364,7 +364,7 @@ section[id] {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 999;
+  z-index: 2;
 }
 .nav-overlay.is-active {
   opacity: 1;
@@ -1319,7 +1319,7 @@ section[id] {
     padding: 110px 32px 40px;
     transform: translateX(100%);
     transition: transform 0.35s ease;
-    z-index: 1050;
+    z-index: 1300;
     overflow-y: auto;
   }
   .main-nav.is-open {
@@ -1356,6 +1356,15 @@ section[id] {
     grid-template-columns: 1fr;
     text-align: center;
     padding-top: 48px;
+  }
+  .hero__badges {
+    align-items: center;
+  }
+  .hero__badges li {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
   }
   .hero__description {
     margin-left: auto;

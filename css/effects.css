@@ -151,7 +151,6 @@ body {
   font-size: 18px;
 }
 
-
 /* =========================================================
    ПОЛОСА ПРОГРЕССА ПРОКРУТКИ
    ========================================================= */
@@ -203,13 +202,25 @@ body {
 }
 
 @keyframes blob-float-a {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(60px, 40px) scale(1.1); }
-  66% { transform: translate(-30px, 70px) scale(0.95); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(60px, 40px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 70px) scale(0.95);
+  }
 }
 @keyframes blob-float-b {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-50px, -40px) scale(1.08); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50px, -40px) scale(1.08);
+  }
 }
 
 .hero__text {
@@ -226,7 +237,9 @@ body {
   animation: text-shine 6s linear infinite;
 }
 @keyframes text-shine {
-  to { background-position: 200% center; }
+  to {
+    background-position: 200% center;
+  }
 }
 
 .hero__subtitle::after {
@@ -241,20 +254,36 @@ body {
   animation: underline-grow 1.2s ease 0.4s both;
 }
 @keyframes underline-grow {
-  from { width: 0; opacity: 0; }
-  to { width: 56px; opacity: 1; }
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 56px;
+    opacity: 1;
+  }
 }
 
 .hero__media-blob {
   animation: blob-morph 12s ease-in-out infinite, blob-float-soft 6s ease-in-out infinite;
 }
 @keyframes blob-morph {
-  0%, 100% { border-radius: 38% 62% 60% 40% / 45% 40% 60% 55%; }
-  50% { border-radius: 60% 40% 42% 58% / 55% 58% 42% 45%; }
+  0%,
+  100% {
+    border-radius: 38% 62% 60% 40% / 45% 40% 60% 55%;
+  }
+  50% {
+    border-radius: 60% 40% 42% 58% / 55% 58% 42% 45%;
+  }
 }
 @keyframes blob-float-soft {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
 }
 
 /* =========================================================
@@ -284,8 +313,13 @@ body {
   animation: cta-pulse 2.6s ease-in-out infinite;
 }
 @keyframes cta-pulse {
-  0%, 100% { box-shadow: 0 -10px 24px -16px rgba(0, 0, 0, 0.4); }
-  50% { box-shadow: 0 -10px 30px -10px rgba(98, 204, 255, 0.8); }
+  0%,
+  100% {
+    box-shadow: 0 -10px 24px -16px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 -10px 30px -10px rgba(98, 204, 255, 0.8);
+  }
 }
 
 /* =========================================================
@@ -326,7 +360,9 @@ body {
   font-size: 12px;
 }
 @keyframes marquee {
-  to { transform: translateX(-50%); }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* =========================================================
@@ -360,11 +396,18 @@ body {
   font-size: clamp(38px, 4vw, 54px);
   font-weight: 700;
   line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
   background: linear-gradient(120deg, var(--color-accent-darker), var(--color-accent));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.03em;
+}
+.metric__value span {
+  display: inline-block;
+  min-width: 3ch;
+  text-align: center;
 }
 .metric__label {
   margin-top: 10px;
@@ -438,15 +481,20 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(98, 204, 255, 0.22), transparent 45%),
+  background: radial-gradient(circle at 20% 20%, rgba(98, 204, 255, 0.22), transparent 45%),
     radial-gradient(circle at 80% 30%, rgba(30, 162, 218, 0.18), transparent 45%),
     radial-gradient(circle at 50% 90%, rgba(12, 127, 176, 0.25), transparent 50%);
   animation: pricing-mesh 16s ease-in-out infinite alternate;
 }
 @keyframes pricing-mesh {
-  0% { background-position: 0% 0%, 100% 0%, 50% 100%; transform: scale(1); }
-  100% { background-position: 30% 20%, 70% 40%, 40% 70%; transform: scale(1.05); }
+  0% {
+    background-position: 0% 0%, 100% 0%, 50% 100%;
+    transform: scale(1);
+  }
+  100% {
+    background-position: 30% 20%, 70% 40%, 40% 70%;
+    transform: scale(1.05);
+  }
 }
 .pricing__bg-video {
   position: absolute;
@@ -480,7 +528,14 @@ body {
   inset: -1px;
   border-radius: inherit;
   padding: 1.5px;
-  background: conic-gradient(from var(--angle, 0deg), var(--color-accent), transparent 40%, var(--color-accent-darker), transparent 80%, var(--color-accent));
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    var(--color-accent),
+    transparent 40%,
+    var(--color-accent-darker),
+    transparent 80%,
+    var(--color-accent)
+  );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -493,7 +548,9 @@ body {
   inherits: false;
 }
 @keyframes rotate-border {
-  to { --angle: 360deg; }
+  to {
+    --angle: 360deg;
+  }
 }
 
 /* =========================================================
@@ -509,21 +566,47 @@ body {
 /* =========================================================
    СТАГГЕРИРОВАННОЕ ПОЯВЛЕНИЕ (кASKAD)
    ========================================================= */
-.advantages__grid .advantage-card:nth-child(1) { transition-delay: 0s; }
-.advantages__grid .advantage-card:nth-child(2) { transition-delay: 0.08s; }
-.advantages__grid .advantage-card:nth-child(3) { transition-delay: 0.16s; }
-.advantages__grid .advantage-card:nth-child(4) { transition-delay: 0.24s; }
-.advantages__grid .advantage-card:nth-child(5) { transition-delay: 0.32s; }
-.advantages__grid .advantage-card:nth-child(6) { transition-delay: 0.40s; }
+.advantages__grid .advantage-card:nth-child(1) {
+  transition-delay: 0s;
+}
+.advantages__grid .advantage-card:nth-child(2) {
+  transition-delay: 0.08s;
+}
+.advantages__grid .advantage-card:nth-child(3) {
+  transition-delay: 0.16s;
+}
+.advantages__grid .advantage-card:nth-child(4) {
+  transition-delay: 0.24s;
+}
+.advantages__grid .advantage-card:nth-child(5) {
+  transition-delay: 0.32s;
+}
+.advantages__grid .advantage-card:nth-child(6) {
+  transition-delay: 0.4s;
+}
 
-.process__list .process-step:nth-child(1) { transition-delay: 0s; }
-.process__list .process-step:nth-child(2) { transition-delay: 0.1s; }
-.process__list .process-step:nth-child(3) { transition-delay: 0.2s; }
-.process__list .process-step:nth-child(4) { transition-delay: 0.3s; }
+.process__list .process-step:nth-child(1) {
+  transition-delay: 0s;
+}
+.process__list .process-step:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.process__list .process-step:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.process__list .process-step:nth-child(4) {
+  transition-delay: 0.3s;
+}
 
-.pricing__grid .price-card:nth-child(1) { transition-delay: 0s; }
-.pricing__grid .price-card:nth-child(2) { transition-delay: 0.12s; }
-.pricing__grid .price-card:nth-child(3) { transition-delay: 0.24s; }
+.pricing__grid .price-card:nth-child(1) {
+  transition-delay: 0s;
+}
+.pricing__grid .price-card:nth-child(2) {
+  transition-delay: 0.12s;
+}
+.pricing__grid .price-card:nth-child(3) {
+  transition-delay: 0.24s;
+}
 
 /* =========================================================
    ДЕКОР-МОБАЙЛ
@@ -553,8 +636,13 @@ body {
   pointer-events: none;
 }
 @keyframes lens-float {
-  0%, 100% { transform: translateY(0) rotate(-3deg); }
-  50% { transform: translateY(-14px) rotate(2deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
 }
 .lens-svg {
   width: 100%;
@@ -569,8 +657,15 @@ body {
   animation: lens-aura-pulse 4s ease-in-out infinite;
 }
 @keyframes lens-aura-pulse {
-  0%, 100% { opacity: 0.2; transform: scale(0.96); }
-  50% { opacity: 0.42; transform: scale(1.04); }
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.42;
+    transform: scale(1.04);
+  }
 }
 
 /* вращающееся кольцо фокуса (засечки) */
@@ -580,7 +675,9 @@ body {
   animation: lens-spin 16s linear infinite;
 }
 @keyframes lens-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* свечение под лепестками */
@@ -590,8 +687,15 @@ body {
   animation: lens-core-pulse 3.2s ease-in-out infinite;
 }
 @keyframes lens-core-pulse {
-  0%, 100% { opacity: 0.85; transform: scale(0.92); }
-  50% { opacity: 1; transform: scale(1.06); }
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
 }
 
 /* лепестки диафрагмы — открывание/закрывание */
@@ -601,8 +705,14 @@ body {
   animation: lens-iris 6s ease-in-out infinite;
 }
 @keyframes lens-iris {
-  0%, 100% { transform: scale(1); }
-  45%, 55% { transform: scale(0.5); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45%,
+  55% {
+    transform: scale(0.5);
+  }
 }
 
 /* блик зрачка */
@@ -618,12 +728,25 @@ body {
   transform-origin: center;
   animation: sparkle 2.6s ease-in-out infinite;
 }
-.sparkle--2 { animation-delay: 0.8s; }
-.sparkle--3 { animation-delay: 1.6s; }
-.sparkle--4 { animation-delay: 1.2s; }
+.sparkle--2 {
+  animation-delay: 0.8s;
+}
+.sparkle--3 {
+  animation-delay: 1.6s;
+}
+.sparkle--4 {
+  animation-delay: 1.2s;
+}
 @keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.4); }
-  50% { opacity: 1; transform: scale(1); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -650,9 +773,34 @@ body {
   .metric {
     padding: 22px 10px;
   }
+  .metric__value {
+    font-size: clamp(28px, 7vw, 38px);
+  }
   .marquee__item {
     font-size: 15px;
     padding: 0 20px;
+  }
+}
+
+/* ===== Hero intro animation ===== */
+.hero-anim {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 28px 16px 8px;
+  text-align: center;
+  color: var(--color-accent-darker);
+}
+.hero-anim__svg {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+@media (max-width: 576px) {
+  .hero-anim {
+    padding: 16px 12px 4px;
+  }
+  .hero-anim__svg {
+    max-width: 440px;
   }
 }
 
@@ -748,7 +896,7 @@ body {
   }
   /* overlay поверх контента, под панелью */
   .nav-overlay {
-    z-index: 1090;
+    z-index: 2;
   }
   /* бургер всегда поверх панели и overlay */
   .burger {
@@ -782,4 +930,3 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.16);
   }
 }
-
