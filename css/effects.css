@@ -264,25 +264,215 @@ body {
   }
 }
 
-.hero__media-blob {
-  animation: blob-morph 12s ease-in-out infinite, blob-float-soft 6s ease-in-out infinite;
+/* =========================================================
+   HERO MEDIA — премиум многослойная композиция
+   Слои (z):  mesh(0) → glow(0) → glass cards(1) → photo(2)
+   Анимации используют только transform / opacity / will-change.
+   Mouse-parallax — см. effects.js (отключён на тач/узких экранах).
+   ========================================================= */
+
+/* Декоративные слои не перехватывают клики */
+.hero__media > * {
+  pointer-events: none;
 }
-@keyframes blob-morph {
-  0%,
-  100% {
-    border-radius: 38% 62% 60% 40% / 45% 40% 60% 55%;
-  }
-  50% {
-    border-radius: 60% 40% 42% 58% / 55% 58% 42% 45%;
+
+/* ---------- Слой 1: mesh gradient — «дышащие» пятна ---------- */
+.hero__mesh {
+  position: absolute;
+  inset: -8%;
+  z-index: 0;
+  filter: blur(36px);
+  will-change: transform;
+}
+.hero__mesh-spot {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+.hero__mesh-spot--blue {
+  width: 58%;
+  height: 58%;
+  top: 4%;
+  left: 6%;
+  background: #55b8ff;
+  opacity: 0.09;
+  animation: mesh-a 26s ease-in-out infinite alternate;
+}
+.hero__mesh-spot--white {
+  width: 52%;
+  height: 52%;
+  bottom: 2%;
+  right: 4%;
+  background: #ffffff;
+  opacity: 0.07;
+  animation: mesh-b 30s ease-in-out infinite alternate;
+}
+.hero__mesh-spot--cyan {
+  width: 44%;
+  height: 44%;
+  top: 34%;
+  right: 18%;
+  background: #aef0ff;
+  opacity: 0.08;
+  animation: mesh-c 22s ease-in-out infinite alternate;
+}
+@keyframes mesh-a {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(3%, 2%) scale(1.05); }
+}
+@keyframes mesh-b {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-3%, -2%) scale(1.06); }
+}
+@keyframes mesh-c {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(2%, -3%) scale(1.04); }
+}
+
+/* ---------- Слой 2: большое мягкое голубое свечение ---------- */
+.hero__glow {
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+  background: radial-gradient(
+    circle,
+    rgba(85, 184, 255, 0.3) 0%,
+    rgba(85, 184, 255, 0.18) 35%,
+    rgba(85, 184, 255, 0.08) 60%,
+    transparent 80%
+  );
+  filter: blur(100px);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: layer-in 0.7s ease 0.05s forwards;
+}
+
+/* ---------- Слой 3: стеклянные карточки документов ---------- */
+.hero__cards {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero__card {
+  position: absolute;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: card-in 0.7s ease forwards;
+}
+.hero__card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transform: rotate(var(--rot, 0deg));
+  will-change: transform;
+}
+.hero__card-title {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(12, 127, 176, 0.65);
+}
+.hero__card-line {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(12, 127, 176, 0.16);
+}
+.hero__card-line--short {
+  width: 55%;
+}
+.hero__card-chip {
+  width: 22px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(85, 184, 255, 0.35), rgba(174, 240, 255, 0.2));
+  align-self: flex-start;
+}
+.hero__card-photo {
+  flex: 1;
+  border-radius: 8px;
+  background: linear-gradient(160deg, rgba(85, 184, 255, 0.3), rgba(255, 255, 255, 0.1));
+}
+/* Паспорт — слева сверху */
+.hero__card--passport {
+  width: 124px;
+  height: 80px;
+  top: 8%;
+  left: -3%;
+  animation-delay: 0.55s;
+}
+/* Водительское удостоверение — справа сверху */
+.hero__card--license {
+  width: 134px;
+  height: 72px;
+  top: 16%;
+  right: -5%;
+  animation-delay: 0.65s;
+}
+/* Полароид — слева снизу */
+.hero__card--polaroid {
+  width: 92px;
+  height: 108px;
+  bottom: 12%;
+  left: 3%;
+  animation-delay: 0.75s;
+}
+/* Фото 3×4 — справа снизу */
+.hero__card--photo {
+  width: 74px;
+  height: 100px;
+  bottom: 18%;
+  right: 5%;
+  animation-delay: 0.85s;
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes layer-in {
+  to { opacity: 1; }
+}
+
+/* ---------- Слой 4: фото девушки — проявляется после свечения ---------- */
+.hero__image {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: layer-in 0.8s ease 0.3s forwards;
+}
+
+/* На узких экранах убираем карточки и mesh — оставляем glow + фото */
+@media (max-width: 991px) {
+  .hero__cards,
+  .hero__mesh {
+    display: none;
   }
 }
-@keyframes blob-float-soft {
-  0%,
-  100% {
-    transform: translateY(0);
+
+/* ---------- prefers-reduced-motion: всё статично ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero__mesh-spot,
+  .hero__card,
+  .hero__glow,
+  .hero__image {
+    animation: none !important;
   }
-  50% {
-    transform: translateY(-14px);
+  .hero__glow,
+  .hero__image {
+    opacity: 1;
+  }
+  .hero__card {
+    opacity: 0.22;
   }
 }
 

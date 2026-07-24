@@ -105,7 +105,9 @@
         <div class="hero__container">
           <div class="hero__text">
             <p class="eyebrow">Фотостудия в Новосибирске</p>
-            <h1 class="hero__title">Красивые фото на&nbsp;документы <span>с&nbsp;<span class="nowrap">профессиональным</span> подходом</span></h1>
+            <h1 class="hero__title">
+              Красивые фото на документы <span class="nowrap"> с профессиональным</span> подходом</span>
+            </h1>
             <p class="hero__subtitle">Не стыдно за паспорт!</p>
             <p class="hero__description">
               Снимаем, обрабатываем и печатаем фото на документы за один визит. Авторская ретушь, строгое соответствие
@@ -146,11 +148,56 @@
           </div>
 
           <div class="hero__media">
-            <div class="hero__media-blob" aria-hidden="true"></div>
+            <!-- Слой 1: едва заметный «дышащий» mesh gradient -->
+            <div class="hero__mesh" aria-hidden="true" data-parallax="0.7">
+              <span class="hero__mesh-spot hero__mesh-spot--blue"></span>
+              <span class="hero__mesh-spot hero__mesh-spot--white"></span>
+              <span class="hero__mesh-spot hero__mesh-spot--cyan"></span>
+            </div>
+
+            <!-- Слой 2: большое мягкое голубое свечение -->
+            <div class="hero__glow" aria-hidden="true" data-parallax="0.4"></div>
+
+            <!-- Слой 3: стеклянные карточки документов (glassmorphism) -->
+            <div class="hero__cards" aria-hidden="true">
+              <article class="hero__card hero__card--passport">
+                <div class="hero__card-inner" data-parallax="0.9" style="--rot: -8deg">
+                  <span class="hero__card-title">PASSPORT</span>
+                  <span class="hero__card-chip"></span>
+                  <span class="hero__card-line"></span>
+                  <span class="hero__card-line hero__card-line--short"></span>
+                </div>
+              </article>
+
+              <article class="hero__card hero__card--license">
+                <div class="hero__card-inner" data-parallax="1" style="--rot: 7deg">
+                  <span class="hero__card-title">DRIVER LICENSE</span>
+                  <span class="hero__card-line"></span>
+                  <span class="hero__card-line hero__card-line--short"></span>
+                </div>
+              </article>
+
+              <article class="hero__card hero__card--polaroid">
+                <div class="hero__card-inner" data-parallax="1.05" style="--rot: -5deg">
+                  <span class="hero__card-photo"></span>
+                  <span class="hero__card-line hero__card-line--short"></span>
+                </div>
+              </article>
+
+              <article class="hero__card hero__card--photo">
+                <div class="hero__card-inner" data-parallax="0.85" style="--rot: 6deg">
+                  <span class="hero__card-photo"></span>
+                  <span class="hero__card-line hero__card-line--short"></span>
+                </div>
+              </article>
+            </div>
+
+            <!-- Слой 4: фото девушки (поверх всех слоёв) -->
             <img
               src="images/img/main baground/main-bg.png"
               alt="Фото на документы — пример обработки"
               class="hero__image"
+              data-parallax="0.4"
             />
           </div>
         </div>

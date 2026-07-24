@@ -88,19 +88,48 @@
     sections.forEach((s) => spy.observe(s));
   }
 
-  /* ---------- 4. Параллакс блоба и фото в герое ---------- */
-  if (!prefersReduced) {
-    const heroBlob = document.querySelector(".hero__media-blob");
-    const heroImage = document.querySelector(".hero__image");
-    const hero = document.querySelector(".hero");
-    if (hero && (heroBlob || heroImage)) {
+  /* ---------- 4. Mouse-parallax многослойной композиции hero ---------- */
+  // Каждый слой двигается со своей скоростью (data-parallax = множитель глубины).
+  // Плавность — через requestAnimationFrame + easing. Отключено на тач-устройствах
+  // и узких экранах, а также при prefers-reduced-motion (см. условие выше).
+  if (!prefersReduced && window.matchMedia("(pointer: fine) and (min-width: 992px)").matches) {
+    const stage = document.querySelector(".hero__media");
+    const targets = stage ? stage.querySelectorAll("[data-parallax]") : [];
+    if (stage && targets.length) {
+      // Кэш элементов: глубина + базовый поворот (--rot у карточек)
+      const items = Array.from(targets).map((el) => ({
+        el,
+        depth: parseFloat(el.dataset.parallax) || 0.5,
+        rot: (getComputedStyle(el).getPropertyValue("--rot") || "").trim() || "0deg",
+      }));
+      const MAX = 14; // максимальное смещение, px
+      let tx = 0, ty = 0; // цель (нормированная -1..1)
+      let cx = 0, cy = 0; // сглаженное значение
+      let raf = null;
+
+      const tick = () => {
+        // easing: приближаемся к цели на ~8% за кадр — мягкое «доганяющее» движение
+        cx += (tx - cx) * 0.08;
+        cy += (ty - cy) * 0.08;
+        for (const { el, depth, rot } of items) {
+          const x = cx * MAX * depth;
+          const y = cy * MAX * depth;
+          el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) rotate(${rot})`;
+        }
+        if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          raf = null;
+        }
+      };
+
       window.addEventListener(
-        "scroll",
-        function () {
-          const y = window.scrollY;
-          if (y > window.innerHeight) return;
-          if (heroBlob) heroBlob.style.transform = `translateY(${y * 0.06}px)`;
-          if (heroImage) heroImage.style.transform = `translateY(${y * -0.04}px)`;
+        "mousemove",
+        (e) => {
+          const r = stage.getBoundingClientRect();
+          tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
+          ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
+          if (!raf) raf = requestAnimationFrame(tick);
         },
         { passive: true }
       );

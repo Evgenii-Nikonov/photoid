@@ -455,16 +455,6 @@ section[id] {
   min-width: 0;
   height: 100%;
 }
-.hero__media-blob {
-  position: absolute;
-  width: 86%;
-  height: 92%;
-  background: linear-gradient(160deg, var(--color-accent) 0%, #bdeaff 100%);
-  border-radius: 38% 62% 60% 40% / 45% 40% 60% 55%;
-  top: 0;
-  right: 0;
-  z-index: 0;
-}
 .hero__image {
   position: relative;
   z-index: 1;
