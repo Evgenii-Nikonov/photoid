@@ -67,7 +67,7 @@ class SEOTests(unittest.TestCase):
             self.assertEqual(studio["address"]["streetAddress"], "10-й Порт-Артурский переулок, 75")
             self.assertNotIn("aggregateRating", studio)
             self.assertNotIn("review", studio)
-            html = (ROOT / name).read_text(encoding="utf-8")
+            html = (ROOT / name).read_text(encoding="utf-8").replace("\u00a0", " ")
             for offer in studio["hasOfferCatalog"]["itemListElement"]:
                 self.assertIn(offer["name"], html)
                 self.assertIn(offer["price"] + " ₽", html)

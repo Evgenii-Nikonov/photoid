@@ -40,6 +40,34 @@ async function main() {
           const r = el.getBoundingClientRect(); return r.width && (r.left < -1 || r.right > innerWidth + 1);
         }).map(el => el.className));
         assert.deepEqual(offscreen, [], `${file} ${width}px offscreen content`);
+        if (file === 'price.html') {
+          const priceIssues = await page.evaluate(() => {
+            const issues = [];
+            document.querySelectorAll('.price-row > b').forEach(value => {
+              const row = value.parentElement.getBoundingClientRect();
+              const box = value.getBoundingClientRect();
+              if (Math.abs(box.right - row.right) > 1 || value.scrollWidth > value.clientWidth + 1 || getComputedStyle(value).textAlign !== 'right') issues.push(`price alignment: ${value.textContent}`);
+            });
+            document.querySelectorAll('.price-row b, .price-group-title b, .price-card__price').forEach(value => {
+              const walker = document.createTreeWalker(value, NodeFilter.SHOW_TEXT);
+              while (walker.nextNode()) {
+                const node = walker.currentNode;
+                for (const match of node.textContent.matchAll(/(\d+)[ \u00a0]+₽/g)) {
+                  const range = document.createRange();
+                  const digit = match.index + match[1].length - 1;
+                  const currency = match.index + match[0].length - 1;
+                  range.setStart(node, digit); range.setEnd(node, digit + 1);
+                  const amount = range.getBoundingClientRect();
+                  range.setStart(node, currency); range.setEnd(node, currency + 1);
+                  const ruble = range.getBoundingClientRect();
+                  if (Math.abs(amount.top - ruble.top) > 1) issues.push(`detached ruble: ${value.textContent}`);
+                }
+              }
+            });
+            return issues;
+          });
+          assert.deepEqual(priceIssues, [], `${width}px: currency and price column`);
+        }
         if (width === 1440) {
           await page.waitForTimeout(2000);
           const vitals = await page.evaluate(() => ({ ...window.auditVitals, bytes: performance.getEntriesByType('resource').reduce((sum, r) => sum + r.transferSize, 0) }));
