@@ -82,9 +82,13 @@
   const photos = [...gallery.querySelectorAll(".photo-open")];
   if (!dialog || typeof dialog.showModal !== "function" || !image || !status || !count || !close || !prevPhoto || !nextPhoto) return;
   let selected = 0;
+  let photoDirection = 1;
+  let imageAnimation = null;
   let opener = null;
   let previousOverflow = "";
   function selectPhoto(index) {
+    photoDirection = index >= selected ? 1 : -1;
+    imageAnimation?.cancel();
     selected = Math.max(0, Math.min(index, photos.length - 1));
     status.textContent = "Загружаем фото…";
     status.hidden = false;
@@ -95,7 +99,17 @@
     prevPhoto.disabled = selected === 0;
     nextPhoto.disabled = selected === photos.length - 1;
   }
-  image.addEventListener("load", () => { image.hidden = false; status.hidden = true; });
+  image.addEventListener("load", () => {
+    image.hidden = false;
+    status.hidden = true;
+    if (!motion.matches && typeof image.animate === "function") {
+      imageAnimation = image.animate([
+        { opacity: .3, transform: `translateX(${photoDirection * 12}px)` },
+        { opacity: 1, transform: "translateX(0)" }
+      ], { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" });
+    }
+  });
+  motion.addEventListener("change", event => { if (event.matches) imageAnimation?.cancel(); });
   image.addEventListener("error", () => { status.textContent = "Фото не удалось загрузить. Выберите другое или закройте просмотр."; image.hidden = true; });
   photos.forEach((photo, index) => {
     photo.querySelector("img").draggable = false;
@@ -125,6 +139,7 @@
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
   });
   dialog.addEventListener("close", () => {
+    imageAnimation?.cancel();
     document.body.style.overflow = previousOverflow;
     opener?.focus({ preventScroll: true });
   });

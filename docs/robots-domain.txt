@@ -1,0 +1,9 @@
+# Publish at https://xn--80aimcxa1ao.xn--p1ai/robots.txt after the domain migration.
+User-agent: *
+Allow: /
+
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&ysclid&from&openstat /
+
+Sitemap: https://xn--80aimcxa1ao.xn--p1ai/sitemap.xml
