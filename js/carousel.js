@@ -7,6 +7,9 @@
   const next = gallery?.querySelector(".arrow.right");
   if (!wrapper || !track || !previous || !next) return;
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const tokens = getComputedStyle(document.documentElement);
+  const photoDuration = parseFloat(tokens.getPropertyValue("--motion-photo")) || 600;
+  const easing = tokens.getPropertyValue("--motion-ease").trim() || "cubic-bezier(.4,0,.2,1)";
   const items = [...track.children];
   const position = gallery.querySelector(".gallery-position");
   const progress = gallery.querySelector(".gallery-progress span");
@@ -104,9 +107,9 @@
     status.hidden = true;
     if (!motion.matches && typeof image.animate === "function") {
       imageAnimation = image.animate([
-        { opacity: .3, transform: `translateX(${photoDirection * 12}px)` },
+        { opacity: .75, transform: `translateX(${photoDirection * 8}px)` },
         { opacity: 1, transform: "translateX(0)" }
-      ], { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" });
+      ], { duration: photoDuration, easing });
     }
   });
   motion.addEventListener("change", event => { if (event.matches) imageAnimation?.cancel(); });

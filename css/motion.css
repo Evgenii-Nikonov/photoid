@@ -1,21 +1,27 @@
 /* Motion enhances visible content; nothing is hidden while scripts load. */
-:root { --motion-fast: 180ms; --motion-medium: 320ms; --motion-ease: cubic-bezier(.22, 1, .36, 1); }
+:root { --motion-fast: 260ms; --motion-medium: 480ms; --motion-enter: 900ms; --motion-photo: 600ms; --motion-ease: cubic-bezier(.4, 0, .2, 1); }
 .js .main-nav { transition: none; }
 .js .main-nav.is-motion-ready { transition: transform var(--motion-medium) var(--motion-ease), visibility var(--motion-medium); }
 .process-step { position: relative; }
 .process-step::before { content: ""; position: absolute; top: -1px; left: 0; width: 52px; height: 2px; background: var(--color-accent-darker); }
 .carousel-item { transition: transform var(--motion-medium) var(--motion-ease), border-color var(--motion-fast), box-shadow var(--motion-medium); }
-.photo-open img { transition: transform 450ms var(--motion-ease); }
-.photo-dialog[open] { animation: photo-enter 280ms var(--motion-ease); }
-.photo-dialog[open]::backdrop { animation: backdrop-enter 220ms ease; }
+.photo-open img { transition: transform var(--motion-photo) var(--motion-ease); }
+.photo-open__zoom { transition: opacity var(--motion-fast) var(--motion-ease), transform var(--motion-medium) var(--motion-ease); }
+.gallery-progress span { transition: none; }
+.photo-dialog[open] { animation: photo-enter var(--motion-medium) var(--motion-ease); }
+.photo-dialog[open]::backdrop { animation: backdrop-enter var(--motion-medium) var(--motion-ease); }
 .price-card { transition: border-color var(--motion-fast), transform var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium); }
+.btn, .advantage-card { transition-duration: var(--motion-medium); transition-timing-function: var(--motion-ease); }
+.burger span, .nav-overlay { transition-duration: var(--motion-medium); transition-timing-function: var(--motion-ease); }
+.accordion-content:not([hidden]) { animation-duration: var(--motion-medium); animation-timing-function: var(--motion-ease); }
 .price-card:focus-within { border-color: var(--color-accent); }
-@keyframes photo-enter { from { opacity: .7; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes photo-enter { from { opacity: .8; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: none; } }
 @keyframes backdrop-enter { from { opacity: .2; } to { opacity: 1; } }
 @media (hover: hover) and (pointer: fine) {
   .carousel-item:hover { transform: translateY(-4px); }
   .photo-open:hover img { transform: scale(1.02); }
   .price-card:hover { transform: translateY(-4px); border-color: var(--color-accent); }
+  .carousel-item[data-motion-entering]:hover, .price-card[data-motion-entering]:hover, .advantage-card[data-motion-entering]:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .carousel-item, .photo-open img, .price-card { transition: none; }

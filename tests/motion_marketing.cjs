@@ -30,18 +30,33 @@ const output = process.env.AUDIT_OUTPUT || '.audit';
     assert.equal(new URL(page.url()).searchParams.get('utm_source'), 'ya');
     assert.equal(await page.locator('h1').evaluate(element => getComputedStyle(element).opacity), '1');
     await page.waitForFunction(() => document.getAnimations().some(animation => animation.effect.target.closest?.('.hero')));
+    const entrance = await page.locator('.hero__cta').evaluate(element => element.getAnimations()[0].effect.getTiming());
+    assert.ok(entrance.duration >= 800, 'Entrance should unfold gently');
+    assert.equal(entrance.fill, 'backwards', 'Delayed elements must hold their starting position instead of jumping');
+    const frames = await page.locator('.hero__cta').evaluate(element => new Promise(resolve => {
+      const values = [];
+      const start = performance.now();
+      function sample(time) {
+        const transform = getComputedStyle(element).transform;
+        values.push({ time, y: transform === 'none' ? 0 : new DOMMatrixReadOnly(transform).m42 });
+        if (time - start < 420) requestAnimationFrame(sample);
+        else resolve(values);
+      }
+      requestAnimationFrame(sample);
+    }));
+    assert.ok(frames.every((frame, index) => index === 0 || frame.time - frames[index - 1].time >= 40 || Math.abs(frame.y - frames[index - 1].y) < 2), 'No start-position jump between animation frames');
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForFunction(() => document.getAnimations().length === 0);
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.locator('#process').scrollIntoViewIfNeeded();
     await page.waitForFunction(() => document.getAnimations().some(animation => animation.effect.target.matches?.('.process-step')));
-    await page.waitForTimeout(800);
+    await page.waitForFunction(() => !document.querySelector('#process [data-motion-entering]'));
     await page.locator('#process').screenshot({ path: path.join(output, 'motion-process-1440.png') });
     await page.locator('#advantages').scrollIntoViewIfNeeded();
     await page.locator('#process').scrollIntoViewIfNeeded();
     assert.equal(await page.evaluate(() => document.getAnimations().filter(animation => animation.effect.target.matches?.('.process-step')).length), 0);
     await page.locator('.carousel').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(800);
+    await page.waitForFunction(() => !document.querySelector('.carousel [data-motion-entering]'));
     await page.locator('.carousel-item').first().hover();
     await page.waitForTimeout(400);
     assert.notEqual(await page.locator('.carousel-item').first().evaluate(element => getComputedStyle(element).transform), 'none');
@@ -49,14 +64,14 @@ const output = process.env.AUDIT_OUTPUT || '.audit';
     await page.locator('.photo-dialog__image').waitFor({ state: 'visible' });
     await page.keyboard.press('ArrowRight');
     await page.waitForFunction(() => !document.querySelector('.photo-dialog__image').hidden && document.querySelector('.photo-dialog__image').getAnimations().length > 0);
-    await page.waitForTimeout(350);
+    await page.waitForFunction(() => document.querySelector('.photo-dialog__image').getAnimations().length === 0);
     await page.locator('.photo-dialog').screenshot({ path: path.join(output, 'motion-photo-dialog.png') });
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('.photo-dialog').evaluate(dialog => dialog.open), false);
     for (const width of [375, 768, 1280, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(`${base}/index.html`);
-      await page.waitForTimeout(850);
+      await page.waitForFunction(() => !document.querySelector('.hero [data-motion-entering]'));
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
       await page.screenshot({ path: path.join(output, `motion-hero-${width}.png`) });
     }
