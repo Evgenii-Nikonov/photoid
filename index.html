@@ -7,17 +7,12 @@
       name="description"
       content="Фотостудия PHOTO ID в Новосибирске — фото на документы за 15 минут, авторская ретушь, печать и копии на месте. Без очередей и пересъёмок."
     />
-    <title>фОТО ID — фото на документы в Новосибирске</title>
+    <title>PHOTO ID — фото на документы в Новосибирске</title>
     <link rel="icon" href="images/logo.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="theme-color" content="#f8fafc" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/effects.css" />
-    <script src="https://res.smartwidgets.ru/app.js" defer></script>
+    <link rel="stylesheet" href="css/carousel.css" />
   </head>
   <body>
     <a href="#main" class="visually-hidden">Перейти к содержимому</a>
@@ -28,7 +23,7 @@
           <img src="images/logo.svg" alt="PHOTO ID — фото на документы" width="140" height="58" />
         </a>
 
-        <nav class="main-nav" id="main-nav">
+        <nav class="main-nav" id="main-nav" aria-label="Основная навигация">
           <ul class="main-nav__list">
             <li><a href="#advantages">Преимущества</a></li>
             <li><a href="#examples">Примеры работ</a></li>
@@ -49,7 +44,7 @@
               </svg>
               <span>+7 (923) 496‒82‒31</span>
             </a>
-            <a href="#contacts" class="btn btn--primary btn--sm">связаться с нами</a>
+            <a href="#contacts" class="btn btn--primary btn--sm">Связаться</a>
           </div>
         </nav>
 
@@ -100,14 +95,12 @@
 
     <div class="nav-overlay" id="nav-overlay"></div>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="hero">
         <div class="hero__container">
           <div class="hero__text">
             <p class="eyebrow">Фотостудия в Новосибирске</p>
-            <h1 class="hero__title">
-              Красивые фото на документы <span class="nowrap"> с профессиональным</span> подходом</span>
-            </h1>
+            <h1 class="hero__title">Красивые фото <span>на документы.</span></h1>
             <p class="hero__subtitle">Не стыдно за паспорт!</p>
             <p class="hero__description">
               Снимаем, обрабатываем и печатаем фото на документы за один визит. Авторская ретушь, строгое соответствие
@@ -115,7 +108,7 @@
             </p>
 
             <div class="hero__cta">
-              <a href="#contacts" class="btn btn--primary">Оставить заявку</a>
+              <a href="#contacts" class="btn btn--primary">Связаться со студией</a>
               <a href="#pricing" class="btn btn--outline">Смотреть цены</a>
             </div>
 
@@ -147,73 +140,27 @@
             </ul>
           </div>
 
-          <div class="hero__media">
-            <!-- Слой 1: едва заметный «дышащий» mesh gradient -->
-            <div class="hero__mesh" aria-hidden="true" data-parallax="0.7">
-              <span class="hero__mesh-spot hero__mesh-spot--blue"></span>
-              <span class="hero__mesh-spot hero__mesh-spot--white"></span>
-              <span class="hero__mesh-spot hero__mesh-spot--cyan"></span>
+          <figure class="hero__media">
+            <div class="hero__photo-frame">
+              <img
+                src="images/optimized/portrait-800.webp"
+                srcset="images/optimized/portrait-480.webp 480w, images/optimized/portrait-800.webp 800w"
+                sizes="(max-width: 600px) 80vw, (max-width: 900px) 360px, 420px"
+                width="800" height="1200" fetchpriority="high" decoding="async"
+                alt="Пример портрета для документов в студии PHOTO ID"
+                class="hero__image"
+              />
             </div>
-
-            <!-- Слой 2: большое мягкое голубое свечение -->
-            <div class="hero__glow" aria-hidden="true" data-parallax="0.4"></div>
-
-            <!-- Слой 3: стеклянные карточки документов (glassmorphism) -->
-            <div class="hero__cards" aria-hidden="true">
-              <article class="hero__card hero__card--passport">
-                <div class="hero__card-inner" data-parallax="0.9" style="--rot: -8deg">
-                  <span class="hero__card-title">PASSPORT</span>
-                  <span class="hero__card-chip"></span>
-                  <span class="hero__card-line"></span>
-                  <span class="hero__card-line hero__card-line--short"></span>
-                </div>
-              </article>
-
-              <article class="hero__card hero__card--license">
-                <div class="hero__card-inner" data-parallax="1" style="--rot: 7deg">
-                  <span class="hero__card-title">DRIVER LICENSE</span>
-                  <span class="hero__card-line"></span>
-                  <span class="hero__card-line hero__card-line--short"></span>
-                </div>
-              </article>
-
-              <article class="hero__card hero__card--polaroid">
-                <div class="hero__card-inner" data-parallax="1.05" style="--rot: -5deg">
-                  <span class="hero__card-photo"></span>
-                  <span class="hero__card-line hero__card-line--short"></span>
-                </div>
-              </article>
-
-              <article class="hero__card hero__card--photo">
-                <div class="hero__card-inner" data-parallax="0.85" style="--rot: 6deg">
-                  <span class="hero__card-photo"></span>
-                  <span class="hero__card-line hero__card-line--short"></span>
-                </div>
-              </article>
-            </div>
-
-            <!-- Слой 4: фото девушки (поверх всех слоёв) -->
-            <img
-              src="images/img/main baground/main-bg.png"
-              alt="Фото на документы — пример обработки"
-              class="hero__image"
-              data-parallax="0.4"
-            />
-          </div>
+            <figcaption class="hero__caption">
+              <span>Съёмка · Ретушь · Печать</span>
+              <span>За один визит</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <div class="marquee" aria-hidden="true">
+      <div class="marquee" aria-label="Фото для ваших документов">
         <div class="marquee__track">
-          <span class="marquee__item">Паспорт<span>•</span></span>
-          <span class="marquee__item">Загранпаспорт<span>•</span></span>
-          <span class="marquee__item">Виза<span>•</span></span>
-          <span class="marquee__item">Водительские права<span>•</span></span>
-          <span class="marquee__item">Пропуск<span>•</span></span>
-          <span class="marquee__item">Личное дело<span>•</span></span>
-          <span class="marquee__item">Студенческий билет<span>•</span></span>
-          <span class="marquee__item">Анкета<span>•</span></span>
-          <!-- дублируем для бесшовного цикла -->
           <span class="marquee__item">Паспорт<span>•</span></span>
           <span class="marquee__item">Загранпаспорт<span>•</span></span>
           <span class="marquee__item">Виза<span>•</span></span>
@@ -228,19 +175,19 @@
       <section class="metrics">
         <div class="metrics__container">
           <div class="metric">
-            <div class="metric__value"><span data-count="15">15</span></div>
-            <p class="metric__label">минут на полный комплект</p>
+            <div class="metric__value">15–20</div>
+            <p class="metric__label">минут на съёмку и обработку</p>
           </div>
           <div class="metric">
-            <div class="metric__value"><span data-count="5">5</span></div>
+            <div class="metric__value"><span>5</span></div>
             <p class="metric__label">минут длится съёмка</p>
           </div>
           <div class="metric">
-            <div class="metric__value">от <span data-count="450">450</span> ₽</div>
+            <div class="metric__value">от <span>450</span> ₽</div>
             <p class="metric__label">минимальная цена</p>
           </div>
           <div class="metric">
-            <div class="metric__value"><span data-count="100">100</span> %</div>
+            <div class="metric__value"><span>100</span> %</div>
             <p class="metric__label">соответствие федеральным стандартам</p>
           </div>
         </div>
@@ -335,13 +282,13 @@
         <div class="examples__container">
           <p class="eyebrow eyebrow--center">До и после обработки</p>
           <h2 class="examples__title common-title">Фото на документы</h2>
-          <h3 class="examples__subtitle">Передвиньте ползунок и оцените разницу</h3>
+          <p class="examples__subtitle">Передвиньте ползунок и оцените разницу</p>
 
           <div class="flex-wrapper">
             <div class="compare-container">
-              <img src="images/after.jpg" class="compare-img after" alt="Фото после обработки" />
-              <img src="images/before.jpg" class="compare-img before" alt="Фото до обработки" />
-              <div class="slider-line" role="slider" aria-label="Сравнение до и после" tabindex="0">
+              <img src="images/optimized/after-1600.webp" srcset="images/optimized/after-960.webp 960w, images/optimized/after-1600.webp 1600w" sizes="(max-width: 960px) 92vw, 880px" width="1600" height="844" loading="lazy" decoding="async" class="compare-img after" alt="Фото после обработки" />
+              <img src="images/optimized/before-1600.webp" srcset="images/optimized/before-960.webp 960w, images/optimized/before-1600.webp 1600w" sizes="(max-width: 960px) 92vw, 880px" width="1600" height="844" loading="lazy" decoding="async" class="compare-img before" alt="Фото до обработки" />
+              <div class="slider-line" role="slider" aria-label="Доля фотографии до обработки" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="До обработки: 50%" tabindex="0">
                 <span class="slider-handle">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m9 6-6 6 6 6M15 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
@@ -354,51 +301,92 @@
           </div>
 
           <div class="examples__gallery-head">
+            <noscript><p class="no-js-note">Сверху — фото после обработки, ниже — до обработки. Для интерактивного сравнения включите JavaScript.</p></noscript>
             <p class="eyebrow eyebrow--center">Наши работы</p>
             <h2 class="common-title">Готовые комплекты фото</h2>
+            <p class="section-description gallery-description">Наши клиенты в кадре. Выберите фото, чтобы рассмотреть детали.</p>
           </div>
 
-          <div class="examples__carousel carousel">
+          <div class="examples__carousel carousel" role="region" aria-label="Галерея готовых фотографий">
+
+            <div class="carousel-track-wrapper" tabindex="0" aria-label="Фотографии: прокрутите или используйте стрелки клавиатуры">
+              <div class="carousel-track">
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-1-960.webp" data-photo-index="0" aria-label="Открыть фото 1 в крупном размере">
+                    <img src="images/optimized/example-1-480.webp" srcset="images/optimized/example-1-480.webp 480w, images/optimized/example-1-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 1" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>01 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-2-960.webp" data-photo-index="1" aria-label="Открыть фото 2 в крупном размере">
+                    <img src="images/optimized/example-2-480.webp" srcset="images/optimized/example-2-480.webp 480w, images/optimized/example-2-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 2" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>02 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-3-960.webp" data-photo-index="2" aria-label="Открыть фото 3 в крупном размере">
+                    <img src="images/optimized/example-3-480.webp" srcset="images/optimized/example-3-480.webp 480w, images/optimized/example-3-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 3" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>03 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-4-960.webp" data-photo-index="3" aria-label="Открыть фото 4 в крупном размере">
+                    <img src="images/optimized/example-4-480.webp" srcset="images/optimized/example-4-480.webp 480w, images/optimized/example-4-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 4" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>04 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-5-960.webp" data-photo-index="4" aria-label="Открыть фото 5 в крупном размере">
+                    <img src="images/optimized/example-5-480.webp" srcset="images/optimized/example-5-480.webp 480w, images/optimized/example-5-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 5" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>05 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-6-960.webp" data-photo-index="5" aria-label="Открыть фото 6 в крупном размере">
+                    <img src="images/optimized/example-6-480.webp" srcset="images/optimized/example-6-480.webp 480w, images/optimized/example-6-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 6" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>06 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-7-960.webp" data-photo-index="6" aria-label="Открыть фото 7 в крупном размере">
+                    <img src="images/optimized/example-7-480.webp" srcset="images/optimized/example-7-480.webp 480w, images/optimized/example-7-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 7" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>07 / 08</span></figcaption>
+                </figure>
+                <figure class="carousel-item">
+                  <a class="photo-open" href="images/optimized/example-8-960.webp" data-photo-index="7" aria-label="Открыть фото 8 в крупном размере">
+                    <img src="images/optimized/example-8-480.webp" srcset="images/optimized/example-8-480.webp 480w, images/optimized/example-8-960.webp 960w" sizes="(max-width: 600px) 75vw, (max-width: 900px) 45vw, 360px" width="480" height="720" decoding="async" alt="Пример фото на документы 8" loading="lazy" />
+                    <span class="photo-open__zoom" aria-hidden="true">↗</span>
+                  </a>
+                  <figcaption class="photo-caption"><span>PHOTO ID</span><span>08 / 08</span></figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="carousel__footer">
+              <p class="gallery-hint">Авторская ретушь. Естественный результат.</p>
+              <div class="gallery-controls">
+                <span class="gallery-position" aria-live="polite" aria-atomic="true">01 / 08</span>
             <button class="arrow left" aria-label="Предыдущие фото">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="m15 6-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
-
-            <div class="carousel-track-wrapper">
-              <div class="carousel-track">
-                <div class="carousel-item">
-                  <img src="images/img/example1.jpg" alt="Пример фото на документы 1" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_1281 (3).jpg" alt="Пример фото на документы 2" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_2368.jpg" alt="Пример фото на документы 3" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_2411.jpg" alt="Пример фото на документы 4" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_7829.jpg" alt="Пример фото на документы 5" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_9125.jpg" alt="Пример фото на документы 6" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_9531.jpg" alt="Пример фото на документы 7" loading="lazy" />
-                </div>
-                <div class="carousel-item">
-                  <img src="images/img/IMG_9721-1 (2).jpg" alt="Пример фото на документы 8" loading="lazy" />
-                </div>
-              </div>
-            </div>
-
             <button class="arrow right" aria-label="Следующие фото">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="m9 6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
+              </div>
+              <div class="gallery-progress" aria-hidden="true"><span></span></div>
+            </div>
           </div>
         </div>
       </section>
@@ -413,7 +401,7 @@
               <span class="process-step__num">01</span>
               <h3>Свяжитесь с нами</h3>
 
-              <p>Приходите в копицентр или свяжитесь с нами — мы подскажем всё необходимое</p>
+              <p>Приходите в копицентр или Позвонить в студию — мы подскажем всё необходимое</p>
             </li>
             <li class="process-step">
               <span class="process-step__num">02</span>
@@ -435,24 +423,22 @@
       </section>
 
       <section class="pricing" id="pricing">
-        <!-- Фоновое видео. Положи свой файл в assets/video/studio-bg.mp4 —
-             пока файла нет, виден анимированный градиентный фон (.pricing::before). -->
         <video
           class="pricing__bg-video"
-          autoplay
           muted
           loop
           playsinline
-          preload="metadata"
+          preload="none"
           poster="images/intro2.jpg"
           aria-hidden="true"
         >
-          <source src="assets/video/studio-bg.mp4" type="video/mp4" />
+          <source data-src="assets/video/studio-bg.mp4" type="video/mp4" />
         </video>
         <div class="pricing__overlay" aria-hidden="true"></div>
         <div class="pricing__container">
           <p class="eyebrow eyebrow--center">Цены</p>
           <h2 class="common-title">Прозрачный прайс без доплат</h2>
+          <p class="section-description">Выберите подходящий комплект. Остальные услуги — в полном прайсе.</p>
 
           <div class="pricing__grid">
             <article class="price-card">
@@ -463,7 +449,7 @@
                 <li>Лёгкая ретушь кожи</li>
                 <li>Печать или электронный вид</li>
               </ul>
-              <a href="#contacts" class="btn btn--outline btn--block">связаться с нами</a>
+              <a href="#contacts" class="btn btn--outline btn--block">Связаться</a>
             </article>
 
             <article class="price-card price-card--popular">
@@ -472,10 +458,10 @@
               <p class="price-card__price">850 ₽</p>
               <ul class="price-card__list">
                 <li>Комплект 4 шт.</li>
-                <li>Профессиональная ретушь: асимметрия, тон кожи, неровности</li>
+                <li>Профессиональная ретушь: асимметрия, тон кожи, неровности, акне</li>
                 <li>Печать и электронный вид в высоком качестве</li>
               </ul>
-              <a href="#contacts" class="btn btn--primary btn--block">связаться с нами</a>
+              <a href="#contacts" class="btn btn--primary btn--block">Связаться</a>
             </article>
 
             <article class="price-card">
@@ -508,8 +494,13 @@
         <div class="feedback__container">
           <p class="eyebrow eyebrow--center">Отзывы</p>
           <h2 class="feedback__title common-title">Ваши отзывы</h2>
-          <h3 class="feedback__subtitle">Для нас лучшая награда — ваши улыбки, доверие и положительные отзывы.</h3>
-          <div class="sw-app" data-app="55024e90703c2088b79bbe9ac52729a4"></div>
+          <p class="feedback__subtitle">Для нас лучшая награда — ваши улыбки, доверие и положительные отзывы.</p>
+          <div class="reviews-status" role="status">
+            <p id="reviews-message">Отзывы доступны в карточке студии на карте.</p>
+            <button class="btn btn--outline btn--sm" type="button" id="reviews-retry" hidden>Попробовать снова</button>
+          </div>
+          <div class="sw-app" data-app="55024e90703c2088b79bbe9ac52729a4" aria-label="Отзывы клиентов" aria-busy="false"></div>
+          <a class="text-link" href="https://yandex.ru/maps/?text=PHOTO%20ID%20Новосибирск%2010-й%20Порт-Артурский%2075" target="_blank" rel="noopener">Открыть отзывы на карте <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
@@ -553,8 +544,8 @@
               <button class="accordion-header" type="button">Можно заказать электронную версию без печати?</button>
               <div class="accordion-content">
                 <p>
-                  Да, передадим готовые файлы на флешку или вышлем на почту — печать оплачивается отдельно при
-                  необходимости.
+                  Да. В пакете «Лайт» можно выбрать электронный вариант вместо печати. «Полный пакет» включает
+                  печать и электронные файлы. Электронная версия уже готовой фотографии — 150 ₽.
                 </p>
               </div>
             </div>
@@ -605,7 +596,7 @@
                 >
                 <a href="https://t.me/photoid1" target="_blank" rel="noopener" aria-label="Мы в Telegram">Telegram</a>
               </div>
-              <a href="#contacts" class="btn btn--primary btn--block">свяжитесь с нами</a>
+              <a href="tel:+79234968231" class="btn btn--primary btn--block">Позвонить в студию</a>
             </div>
 
             <div class="where__map map">
@@ -616,6 +607,7 @@
                 loading="lazy"
                 title="Карта — расположение фотостудии PHOTO ID"
               ></iframe>
+              <a class="map-link" href="https://yandex.ru/maps/?text=Новосибирск%2010-й%20Порт-Артурский%20переулок%2075" target="_blank" rel="noopener">Открыть адрес в Яндекс Картах <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
@@ -680,8 +672,24 @@
           stroke-linejoin="round"
         />
       </svg>
-      связаться с нами
+      Позвонить в студию
     </a>
+
+    <dialog class="photo-dialog" aria-labelledby="photo-dialog-title">
+      <div class="photo-dialog__header">
+        <h2 id="photo-dialog-title">Готовые фото <span class="photo-dialog__count" aria-live="polite" aria-atomic="true"></span></h2>
+        <button class="photo-dialog__close" type="button" aria-label="Закрыть просмотр фото" autofocus>×</button>
+      </div>
+      <div class="photo-dialog__image-wrap">
+        <img class="photo-dialog__image" width="960" height="1440" alt="" decoding="async" />
+        <p class="photo-dialog__status" role="status">Загружаем фото…</p>
+      </div>
+      <div class="photo-dialog__footer">
+        <button class="arrow photo-dialog__prev" type="button" aria-label="Предыдущее фото">←</button>
+        <p>Съёмка и авторская ретушь в PHOTO ID</p>
+        <button class="arrow photo-dialog__next" type="button" aria-label="Следующее фото">→</button>
+      </div>
+    </dialog>
 
     <script src="js/beforeAfterSlider.js" defer></script>
     <script src="js/carousel.js" defer></script>

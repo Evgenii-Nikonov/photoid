@@ -1,176 +1,161 @@
-/* =========================================================
-   EFFECTS — прогресс скролла, счётчики, scrollspy,
-   параллакс героя, tilt карточек, пауза видео вне экрана
-   ========================================================= */
-(function () {
+(() => {
   "use strict";
-
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------- 1. Полоса прогресса прокрутки ---------- */
-  const progress = document.createElement("div");
-  progress.className = "scroll-progress";
-  document.body.appendChild(progress);
-
-  let ticking = false;
-  function updateProgress() {
-    const scrollTop = window.scrollY;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = height > 0 ? (scrollTop / height) * 100 : 0;
-    progress.style.width = pct + "%";
-    ticking = false;
-  }
-  window.addEventListener(
-    "scroll",
-    function () {
-      if (!ticking) {
-        window.requestAnimationFrame(updateProgress);
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-  updateProgress();
-
-  /* ---------- 2. Анимированные счётчики ---------- */
-  const counters = document.querySelectorAll("[data-count]");
-  if ("IntersectionObserver" in window && counters.length && !prefersReduced) {
-    const animateCount = (el) => {
-      const target = parseFloat(el.dataset.count);
-      const duration = 1600;
-      const start = performance.now();
-      const step = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        // easeOutExpo
-        const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-        el.textContent = Math.round(target * eased).toString();
-        if (p < 1) requestAnimationFrame(step);
-        else el.textContent = String(target);
-      };
-      requestAnimationFrame(step);
+  const links = [...document.querySelectorAll(".main-nav__list a[href^='#']")];
+  const sections = links.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
+  if (sections.length) {
+    let frame = null;
+    const update = () => {
+      const line = window.innerHeight * 0.4;
+      const current = sections.find(section => { const rect = section.getBoundingClientRect(); return rect.top <= line && rect.bottom > line; });
+      links.forEach(link => {
+        const active = link.hash === `#${current?.id}`;
+        link.classList.toggle("is-active", active);
+        if (active) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+      frame = null;
     };
-    const ioCount = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCount(entry.target);
-            ioCount.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-    counters.forEach((c) => ioCount.observe(c));
-  } else {
-    counters.forEach((c) => (c.textContent = String(c.dataset.count)));
+    window.addEventListener("scroll", () => { if (frame === null) frame = requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
   }
 
-  /* ---------- 3. Scrollspy — активный пункт меню ---------- */
-  const navLinks = Array.from(document.querySelectorAll(".main-nav__list a[href^='#']"));
-  const sections = navLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
+  // Load the background only when it is visible; pause on motion preferences and tab changes.
+  const video = document.querySelector(".pricing__bg-video");
+  if (video) {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let inView = false;
+    let pending = false;
+    let failed = false;
+    let playTimeout = null;
+    video.dataset.state = "idle";
+    video.muted = true;
 
-  if ("IntersectionObserver" in window && sections.length) {
-    const spy = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = "#" + entry.target.id;
-            navLinks.forEach((l) =>
-              l.classList.toggle("is-active", l.getAttribute("href") === id)
-            );
-          }
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((s) => spy.observe(s));
-  }
-
-  /* ---------- 4. Mouse-parallax многослойной композиции hero ---------- */
-  // Каждый слой двигается со своей скоростью (data-parallax = множитель глубины).
-  // Плавность — через requestAnimationFrame + easing. Отключено на тач-устройствах
-  // и узких экранах, а также при prefers-reduced-motion (см. условие выше).
-  if (!prefersReduced && window.matchMedia("(pointer: fine) and (min-width: 992px)").matches) {
-    const stage = document.querySelector(".hero__media");
-    const targets = stage ? stage.querySelectorAll("[data-parallax]") : [];
-    if (stage && targets.length) {
-      // Кэш элементов: глубина + базовый поворот (--rot у карточек)
-      const items = Array.from(targets).map((el) => ({
-        el,
-        depth: parseFloat(el.dataset.parallax) || 0.5,
-        rot: (getComputedStyle(el).getPropertyValue("--rot") || "").trim() || "0deg",
-      }));
-      const MAX = 14; // максимальное смещение, px
-      let tx = 0, ty = 0; // цель (нормированная -1..1)
-      let cx = 0, cy = 0; // сглаженное значение
-      let raf = null;
-
-      const tick = () => {
-        // easing: приближаемся к цели на ~8% за кадр — мягкое «доганяющее» движение
-        cx += (tx - cx) * 0.08;
-        cy += (ty - cy) * 0.08;
-        for (const { el, depth, rot } of items) {
-          const x = cx * MAX * depth;
-          const y = cy * MAX * depth;
-          el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) rotate(${rot})`;
-        }
-        if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) {
-          raf = requestAnimationFrame(tick);
-        } else {
-          raf = null;
-        }
-      };
-
-      window.addEventListener(
-        "mousemove",
-        (e) => {
-          const r = stage.getBoundingClientRect();
-          tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
-          ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
-          if (!raf) raf = requestAnimationFrame(tick);
-        },
-        { passive: true }
-      );
+    function fallback() {
+      failed = true;
+      clearTimeout(playTimeout);
+      video.pause();
+      video.dataset.state = "fallback";
     }
+    function pause() {
+      clearTimeout(playTimeout);
+      video.pause();
+      if (!failed) video.dataset.state = "paused";
+    }
+    async function play() {
+      if (!inView || document.hidden || motion.matches || pending || failed) return;
+      const source = video.querySelector("source");
+      if (source && !source.hasAttribute("src")) {
+        source.src = source.dataset.src;
+        video.load();
+      }
+      pending = true;
+      video.dataset.state = "loading";
+      playTimeout = setTimeout(fallback, 12000);
+      try {
+        await video.play();
+        if (!inView || document.hidden || motion.matches) pause();
+        else video.dataset.state = "playing";
+      } catch {
+        // A cancelled offscreen play is expected; blocked autoplay uses the poster.
+        if (inView && !document.hidden && !motion.matches) fallback();
+      } finally {
+        pending = false;
+        clearTimeout(playTimeout);
+      }
+    }
+    video.addEventListener("error", fallback);
+    video.querySelector("source")?.addEventListener("error", fallback);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(entries => {
+        inView = entries[0].isIntersecting;
+        if (inView) play();
+        else pause();
+      }, { threshold: 0.05 }).observe(video);
+    } else {
+      const checkVisibility = () => {
+        const rect = video.getBoundingClientRect();
+        inView = rect.bottom > 0 && rect.top < innerHeight;
+        if (inView) play(); else pause();
+      };
+      window.addEventListener("scroll", checkVisibility, { passive: true });
+      checkVisibility();
+    }
+    document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); else play(); });
+    motion.addEventListener("change", event => { if (event.matches) pause(); else play(); });
   }
 
-  /* ---------- 5. Tilt-эффект на карточках преимуществ ---------- */
-  if (!prefersReduced && window.matchMedia("(pointer: fine)").matches) {
-    const tiltSelector = ".advantage-card";
-    document.querySelectorAll(tiltSelector).forEach((card) => {
-      card.addEventListener("pointermove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width - 0.5;
-        const py = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `translateY(-6px) perspective(800px) rotateX(${-py * 6}deg) rotateY(${px * 8}deg)`;
+  const widget = document.querySelector(".sw-app");
+  const message = document.getElementById("reviews-message");
+  const retry = document.getElementById("reviews-retry");
+  if (widget && message && retry) {
+    let loading = false;
+    let script = null;
+    let timeout = null;
+    const status = message.parentElement;
+    function enhanceReviews() {
+      widget.querySelectorAll("img:not([alt])").forEach(image => {
+        image.alt = image.closest(".sw-review-item-photo") ? "" : "Фото из отзыва клиента";
       });
-      card.addEventListener("pointerleave", () => {
-        card.style.transform = "";
+      widget.querySelectorAll(".sw-scroll").forEach(region => {
+        if (region.scrollWidth > region.clientWidth + 1 || region.scrollHeight > region.clientHeight + 1) {
+          region.tabIndex = 0;
+          region.setAttribute("aria-label", region.closest(".sw-review-item-images") ? "Фотографии из отзыва" : "Отзывы клиентов");
+        }
       });
-    });
+      widget.querySelectorAll("a[target='_blank']").forEach(link => { link.relList.add("noopener"); });
+      // Provider branding uses inline !important; retain the link with readable contrast.
+      widget.closest(".feedback")?.querySelectorAll(".sw-review-bottom a").forEach(link => {
+        link.style.setProperty("color", "#5d6573", "important");
+      });
+    }
+    const hasReviews = () => widget.dataset.swState === "loaded" && Boolean(widget.querySelector("iframe") || widget.textContent.trim());
+    function ready() {
+      if (!hasReviews()) return;
+      enhanceReviews();
+      clearTimeout(timeout);
+      loading = false;
+      widget.setAttribute("aria-busy", "false");
+      status.hidden = true;
+      retry.hidden = true;
+    }
+    function failed() {
+      clearTimeout(timeout);
+      loading = false;
+      widget.setAttribute("aria-busy", "false");
+      message.textContent = "Отзывы сейчас не загрузились. Попробуйте снова или откройте карточку студии на карте.";
+      status.hidden = false;
+      retry.hidden = false;
+    }
+    function load() {
+      if (loading) return;
+      if (hasReviews()) return ready();
+      loading = true;
+      widget.setAttribute("aria-busy", "true");
+      status.hidden = false;
+      retry.hidden = true;
+      message.textContent = "Загружаем отзывы…";
+      if (typeof window.swAppRefresh === "function") {
+        window.swAppRefresh();
+        timeout = setTimeout(() => hasReviews() ? ready() : failed(), 12000);
+        return;
+      }
+      script?.remove();
+      script = document.createElement("script");
+      script.src = "https://res.smartwidgets.ru/app.js";
+      script.async = true;
+      script.addEventListener("error", failed, { once: true });
+      document.head.appendChild(script);
+      timeout = setTimeout(() => hasReviews() ? ready() : failed(), 12000);
+    }
+    new MutationObserver(() => {
+      if (["quota", "nodata"].includes(widget.dataset.swState)) failed();
+      else ready();
+    }).observe(widget, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["data-sw-state"] });
+    retry.addEventListener("click", load);
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(entries => { if (entries[0].isIntersecting) { observer.disconnect(); load(); } }, { rootMargin: "300px" });
+      observer.observe(widget.closest(".feedback") || widget);
+    } else load();
   }
-
-  /* ---------- 6. Видео-фон в прайсе: пауза вне экрана ---------- */
-  const bgVideo = document.querySelector(".pricing__bg-video");
-  if (bgVideo && "IntersectionObserver" in window) {
-    const vio = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const p = bgVideo.play();
-            if (p && p.catch) p.catch(() => {});
-          } else {
-            bgVideo.pause();
-          }
-        });
-      },
-      { threshold: 0.05 }
-    );
-    vio.observe(bgVideo);
-  }
-
-  /* ---------- 7. Подсветка пунктов бегущей строки при появлении ---------- */
-  // (анимация на CSS, тут только плавный старт после загрузки)
 })();

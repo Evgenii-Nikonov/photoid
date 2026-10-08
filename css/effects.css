@@ -1,1122 +1,208 @@
-@charset "UTF-8";
+/* Shared refinements. Component foundations and tokens live in style.css. */
+::selection { background: var(--color-accent); color: var(--color-black); }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; }
+main:focus, section:focus { outline: none; }
+.pricing :focus-visible, .site-footer :focus-visible, .price-cta :focus-visible { outline-color: var(--color-accent); }
+a, button { -webkit-tap-highlight-color: rgba(98, 204, 255, .25); }
+.btn { white-space: normal; text-align: center; }
+.btn--sm { min-height: 44px; }
+.btn:disabled, .arrow:disabled { cursor: default; opacity: .45; transform: none; }
+.arrow:disabled { background: var(--color-gray-100); color: var(--color-text-muted); border-color: var(--color-border); }
+.header__icon, .footer-socials a { width: 44px; height: 44px; align-items: center; justify-content: center; display: flex; }
+.header__icons, .footer-socials { gap: 0; }
+.main-nav__list a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; font-size: 14px; }
+.main-nav__list a.is-active, .main-nav__list a[aria-current="page"] { color: var(--color-accent-darker); }
+.main-nav__list a.is-active::after, .main-nav__list a[aria-current="page"]::after { width: 100%; }
+.main-nav__cta .btn { min-width: 116px; }
+.burger { position: relative; z-index: 1400; }
+.eyebrow { padding: 0; background: none; border-radius: 0; font-size: 12px; letter-spacing: .12em; line-height: 1.5; }
+.eyebrow::before { content: ""; width: 18px; height: 2px; background: currentColor; flex-shrink: 0; }
+.eyebrow--center { display: inline-flex; }
+.common-title { font-size: clamp(28px, 3.4vw, 44px); letter-spacing: -.035em; text-wrap: balance; }
+.advantages__container, .process__container, .pricing__container, .examples__container, .where__container { text-align: left; }
+.advantages .common-title, .process .common-title, .pricing .common-title, .examples .common-title, .where .common-title { text-align: left; }
+.hero__title span { display: block; }
+.hero__container { padding-block: 64px; }
+.hero__subtitle { font-size: clamp(18px, 2vw, 23px); }
+.hero__description { font-size: var(--font-lead); max-width: 540px; }
+.hero__badges { gap: var(--space-3); }
+.hero__badges .icon { width: 28px; height: 28px; padding: 5px; border-radius: 6px; }
+.hero__badges li { font-size: var(--font-small); }
+.hero__photo-frame { width: min(100%, 420px); position: relative; background: #fff; padding: 12px 12px 0; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); }
+.hero__image { display: block; width: 100%; max-width: none; height: auto; border-radius: 8px 8px 0 0; box-shadow: none; object-fit: contain; }
+.hero__caption { width: min(100%, 420px); display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--color-text-muted); margin-top: var(--space-4); }
+.marquee { background: #fff; border-block: 1px solid var(--color-border); padding: 22px 0; white-space: normal; }
+.marquee__track { max-width: var(--container-width); padding-inline: 32px; margin-inline: auto; display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.marquee__item { font-size: 13px; color: var(--color-text-muted); display: inline-flex; align-items: center; gap: 24px; }
+.marquee__item > span { color: var(--color-accent-darker); }
+.metrics { padding: 40px 0; }
+.metrics__container { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.metric { padding: 8px 24px 8px 0; border-right: 1px solid var(--color-border); }
+.metric:last-child { border-right: 0; }
+.metric__value { font-size: clamp(28px, 3vw, 40px); font-weight: 700; letter-spacing: -.04em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.metric__label { margin-top: 8px; font-size: 13px; color: var(--color-text-muted); max-width: 220px; }
+.advantage-card h3, .process-step h3 { font-size: 20px; line-height: 1.35; }
+.advantage-card__icon { width: 44px; height: 44px; border-radius: var(--radius-sm); }
+.advantage-card__icon svg { width: 23px; height: 23px; }
+.advantage-card, .contact-card { box-shadow: none; }
+.advantage-card:hover { box-shadow: var(--shadow-sm); }
+.process-step p { font-size: var(--font-body); }
+.examples__subtitle { text-align: left; }
+.compare-container { background: var(--color-gray-50); touch-action: pan-y; }
+.slider-line::before { content: ""; position: absolute; inset: 0; width: 3px; margin: auto; background: #fff; box-shadow: 0 0 4px rgba(0,0,0,.4); }
+.slider-handle { position: relative; }
+.examples .slider-line:focus-visible { outline: none; }
+.slider-line:focus-visible .slider-handle { outline: 3px solid var(--color-focus); outline-offset: 4px; }
+.carousel { max-width: none; }
+.carousel-track-wrapper { overscroll-behavior-x: contain; }
+.carousel-item { border: 1px solid var(--color-border); box-shadow: none; }
+.pricing { position: relative; isolation: isolate; overflow: hidden; }
+.pricing .eyebrow { color: var(--color-accent); }
+.pricing__bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .25; pointer-events: none; z-index: -2; }
+.pricing__overlay { position: absolute; inset: 0; background: rgba(20, 22, 27, .55); pointer-events: none; z-index: -1; }
+.pricing__container { position: relative; }
+.section-description { font-size: var(--font-body); color: #bfc6d1; max-width: 620px; }
+.price-card { padding: var(--space-8); }
+.price-card__name { font-size: 20px; }
+.price-card__price { font-size: clamp(32px, 3vw, 40px); letter-spacing: -.04em; line-height: 1.25; }
+.price-card--popular { background: #253443; }
+.price-card__badge { font-size: 11px; text-transform: none; letter-spacing: 0; border-radius: 6px; }
+.price-card__list li::before { width: 7px; height: 7px; top: 9px; }
+.price-card__list li { padding-left: 20px; }
+.pricing__extra { margin-top: 32px; padding: var(--space-8); gap: 24px; }
+.pricing__extra-list li { font-size: var(--font-small); }
+.reviews-status { max-width: 660px; margin: 0 auto 24px; padding: 24px; border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-text-muted); background: var(--color-gray-50); }
+.reviews-status .btn { margin-top: 16px; }
+.sw-app:empty { display: none; }
+.feedback .sw-app { margin-bottom: 24px; }
+/* The provider injects inline sizes and its stylesheet after ours. Keep actual reviews readable. */
+#reviews .sw-app .sw-review-item { height: auto !important; min-height: 0 !important; background: #fff !important; border: 1px solid var(--color-border) !important; border-radius: var(--radius-md) !important; box-shadow: none !important; padding: 20px !important; }
+#reviews .sw-app .sw-review-item-message, #reviews .sw-app .sw-review-item-body { height: auto !important; max-height: none !important; overflow: visible !important; }
+#reviews .sw-app .sw-review-item-date, #reviews .sw-app .sw-reviews-count, #reviews .sw-app .sw-review-bottom a { color: var(--color-text-muted) !important; }
+#reviews .sw-app .sw-review-item-date { font-size: 12px !important; }
+#reviews .sw-app .sw-review-item-header { margin-bottom: 16px !important; }
+.text-link { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; color: var(--color-accent-darker); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.accordion-header { line-height: 1.5; }
+.accordion-header:hover { background: var(--color-gray-50); }
+.accordion-content:not([hidden]) { animation: answer-in .18s ease-out; }
+@keyframes answer-in { from { opacity: .4; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.contact-card__socials a { border-radius: var(--radius-sm); min-height: 44px; }
+.contact-card__list a { text-decoration: underline; text-underline-offset: 4px; }
+.contact-card__list li { font-size: var(--font-body); }
+.map-link { padding: 16px 20px; background: var(--color-gray-50); font-size: var(--font-small); color: var(--color-accent-darker); text-decoration: underline; text-underline-offset: 3px; }
+.map-link:hover { background: var(--color-accent-light); }
+.site-footer { padding-top: 40px; }
+.footer-nav { gap: 8px 24px; }
+.footer-nav a { display: inline-flex; min-height: 44px; align-items: center; }
+.price-hero { padding: 48px 0 56px; }
+.price-hero .eyebrow { display: flex; width: fit-content; }
+.price-hero__title { letter-spacing: -.04em; line-height: 1.15; }
+.back-link { min-height: 44px; }
+.price-block { background: #fff; }
+.price-block[id] { scroll-margin-top: 96px; }
+.price-grid { align-items: start; }
+.price-categories { display: flex; gap: 8px; overflow-x: auto; padding: 4px 4px 16px; margin: 0 -4px 24px; scrollbar-width: thin; }
+.price-categories a { display: inline-flex; align-items: center; flex-shrink: 0; min-height: 44px; padding: 8px 14px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 14px; color: var(--color-text); }
+.price-categories a:hover { background: var(--color-accent-light); border-color: var(--color-accent); }
+.price-block__title { font-size: 22px; line-height: 1.35; }
+.price-row span { min-width: 0; overflow-wrap: anywhere; }
+.price-group-title { flex-wrap: wrap; }
+.price-table--sub .price-row { font-size: var(--font-small); }
+.price-cta { text-align: left; display: grid; grid-template-columns: 1fr auto; gap: 12px 32px; align-items: center; }
+.price-cta p { margin: 0; }
+.price-cta__actions { grid-column: 2; grid-row: 1 / 3; }
+.mobile-cta { min-height: 56px; padding-bottom: max(15px, env(safe-area-inset-bottom)); }
+.reveal { opacity: 1; transform: none; }
+html:not(.js) .carousel .arrow, html:not(.js) .slider-line { display: none; }
+html:not(.js) .compare-container { aspect-ratio: auto; }
+html:not(.js) .examples .compare-img { position: static; height: auto; clip-path: none; }
+html:not(.js) .compare-tag { display: none; }
+.no-js-note { padding: 16px 0; color: var(--color-text-muted); font-size: var(--font-small); }
 
-/* =========================================================
-   EFFECTS — типографика, анимации, фоновое видео, полира
-   Подключается ПОСЛЕ style.css, поэтому переопределяет токены
-   ========================================================= */
-
-/* ---------- Доступность: уважаем настройку «уменьшить движение» ---------- */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .header-phone, .header__icons { display: none; }
+}
+@media (min-width: 901px) {
+  .pricing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pricing__grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 900px; }
+}
+@media (min-width: 1201px) {
+  .price-block:nth-child(3) { grid-row: span 3; }
+  .price-block:last-child { grid-column: 1 / -1; }
+  .price-block:last-child .price-table { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+}
+@media (max-width: 1199px) {
+  .site-header__container { min-height: 72px; flex-wrap: wrap; }
+  html:not(.js) .site-header { position: static; }
+  html:not(.js) .main-nav { flex: 1 1 100%; flex-direction: column; align-items: stretch; }
+  html:not(.js) .main-nav__list { flex-direction: row; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 0; }
+  html:not(.js) .main-nav__list a { font-size: 14px; }
+  html:not(.js) .main-nav__cta { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  html:not(.js) .main-nav__cta .btn { width: auto; }
+  .js .main-nav { width: min(88vw, 360px); padding: 96px 24px max(32px, env(safe-area-inset-bottom)); }
+  .js .main-nav__list { gap: 8px; }
+  .js .main-nav__list a { font-size: 18px; padding: 6px 0; }
+  .js .main-nav__cta { margin-top: auto; }
+  .hero__photo-frame, .hero__caption { max-width: 360px; }
+  .hero__container { gap: 32px; }
+}
+@media (max-width: 900px) {
+  .hero__text { max-width: 640px; }
+  .hero__container { gap: 32px; padding-block: 40px; }
+  .hero__media { margin-top: 0; }
+  .hero__description { margin-left: 0; }
+  .hero__title { max-width: 620px; }
+  .hero__photo-frame, .hero__caption { max-width: 360px; }
+  .pricing__grid, .pricing__grid--two { grid-template-columns: 1fr; max-width: none; }
+  .pricing__extra-list { flex-basis: 100%; }
+  .price-cta { display: block; }
+  .price-cta p { margin-bottom: 24px; }
+  .price-cta__actions { justify-content: flex-start; }
+}
+@media (max-width: 768px) {
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .metrics__container { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  .metric:nth-child(2) { border-right: 0; }
+  .hero__title { font-size: clamp(38px, 8vw, 56px); }
+  .hero__description { font-size: 16px; }
+  .hero__badges li { align-items: center; }
+  .process__list { gap: 0; }
+  .pricing__grid { gap: 28px; }
+  .where__layout, .advantages__grid, .process__list, .pricing__grid { margin-top: 32px; }
+  .contact-card { padding: 24px; }
+  .marquee__track { padding-inline: 24px; }
+}
+@media (max-width: 600px) {
+  .hero__container { padding: 36px 18px 40px; }
+  .hero__photo-frame, .hero__caption { width: min(100%, 300px); }
+  .hero__badges li { font-size: 13px; }
+  .hero__caption { font-size: 11px; }
+  .marquee__track { padding-inline: 18px; gap: 8px 16px; }
+  .marquee__item { gap: 16px; font-size: 12px; }
+  .metric { padding-right: 12px; }
+  .metric__value { font-size: 30px; }
+  .metric__label { font-size: 12px; }
+  .compare-tag { top: 10px; font-size: 11px; padding: 4px 10px; }
+  .price-card, .pricing__extra, .price-block { padding: 24px 20px; }
+  .price-block__title { font-size: 20px; }
+  .price-row { gap: 16px; font-size: 14px; }
+  .price-row b { max-width: 45%; text-align: right; white-space: normal; }
+  .price-group-title { font-size: 14px; }
+  .price-hero { padding-block: 28px 40px; }
+  .price-cta__actions { flex-direction: column; }
+  .price-cta__actions .btn { width: 100%; }
+  .where__map iframe { min-height: 300px; }
+}
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ---------- Тонкая полира ---------- */
-::selection {
-  background: var(--color-accent);
-  color: var(--color-black);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-/* Кастомный скроллбар */
-::-webkit-scrollbar {
-  width: 12px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-gray-50);
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--color-accent), var(--color-accent-darker));
-  border-radius: 999px;
-  border: 3px solid var(--color-gray-50);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-darker);
-}
-
-/* =========================================================
-   ТИПОГРАФИКА — Montserrat + крупнее и читабельнее
-   ========================================================= */
-body {
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-  font-size: 18px;
-  line-height: 1.7;
-}
-
-.eyebrow {
-  font-size: 14.5px;
-  padding: 10px 20px;
-}
-
-.common-title {
-  font-size: clamp(36px, 5vw, 64px);
-  letter-spacing: -0.02em;
-}
-
-/* Header */
-.main-nav__list a {
-  font-size: 15px;
-}
-.header-phone {
-  font-size: 16px;
-}
-
-/* Hero */
-.hero__title {
-  font-size: clamp(42px, 6vw, 78px);
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-}
-.hero__subtitle {
-  font-size: clamp(22px, 2.4vw, 30px);
-}
-.hero__description {
-  font-size: 19.5px;
-}
-.hero__badges li {
-  font-size: 18px;
-}
-
-.btn {
-  font-size: 18px;
-  padding: 19px 36px;
-}
-
-/* Advantages */
-.advantage-card h3 {
-  font-size: 24px;
-}
-.advantage-card p {
-  font-size: 17px;
-}
-
-/* Examples */
-.examples__subtitle {
-  font-size: 19px;
-}
-.compare-tag {
-  font-size: 14px;
-}
-
-/* Process */
-.process-step h3 {
-  font-size: 22px;
-}
-.process-step p {
-  font-size: 17px;
-}
-
-/* Pricing */
-.price-card__name {
-  font-size: 24px;
-}
-.price-card__price {
-  font-size: clamp(42px, 4.2vw, 56px);
-  letter-spacing: -0.02em;
-}
-.price-card__list li {
-  font-size: 16.5px;
-}
-
-/* Feedback / FAQ */
-.feedback__subtitle {
-  font-size: 19px;
-}
-.accordion-header {
-  font-size: 20px;
-}
-.accordion-content p {
-  font-size: 17px;
-}
-
-/* Contacts */
-.contact-card__list li {
-  font-size: 18px;
-}
-
-/* Метрики / бегущая строка — тоже крупнее */
-.metric__label {
-  font-size: 16px;
-}
-.marquee__item {
-  font-size: 18px;
-}
-
-/* =========================================================
-   ПОЛОСА ПРОГРЕССА ПРОКРУТКИ
-   ========================================================= */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0%;
-  z-index: 1200;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-darker));
-  box-shadow: 0 0 12px rgba(98, 204, 255, 0.7);
-  transition: width 0.1s linear;
-}
-
-/* =========================================================
-   HERO — анимированная SVG-сцена "камера → вспышка → фото"
-   ========================================================= */
-.hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.5;
-  pointer-events: none;
-}
-.hero::before {
-  width: 520px;
-  height: 520px;
-  top: -160px;
-  left: -120px;
-  background: radial-gradient(circle at 30% 30%, var(--color-accent), transparent 65%);
-  animation: blob-float-a 18s ease-in-out infinite;
-}
-.hero::after {
-  width: 460px;
-  height: 460px;
-  bottom: -180px;
-  right: -100px;
-  background: radial-gradient(circle at 60% 40%, #b9ecff, transparent 65%);
-  animation: blob-float-b 22s ease-in-out infinite;
-}
-
-@keyframes blob-float-a {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(60px, 40px) scale(1.1);
-  }
-  66% {
-    transform: translate(-30px, 70px) scale(0.95);
-  }
-}
-@keyframes blob-float-b {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-50px, -40px) scale(1.08);
-  }
-}
-
-.hero__text {
-  position: relative;
-  z-index: 2;
-}
-
-.hero__title span {
-  background: linear-gradient(90deg, var(--color-accent-darker), var(--color-accent), var(--color-accent-darker));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: text-shine 6s linear infinite;
-}
-@keyframes text-shine {
-  to {
-    background-position: 200% center;
-  }
-}
-
-.hero__subtitle::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 56px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--color-accent);
-  animation: underline-grow 1.2s ease 0.4s both;
-}
-@keyframes underline-grow {
-  from {
-    width: 0;
-    opacity: 0;
-  }
-  to {
-    width: 56px;
-    opacity: 1;
-  }
-}
-
-/* =========================================================
-   HERO MEDIA — премиум многослойная композиция
-   Слои (z):  mesh(0) → glow(0) → glass cards(1) → photo(2)
-   Анимации используют только transform / opacity / will-change.
-   Mouse-parallax — см. effects.js (отключён на тач/узких экранах).
-   ========================================================= */
-
-/* Декоративные слои не перехватывают клики */
-.hero__media > * {
-  pointer-events: none;
-}
-
-/* ---------- Слой 1: mesh gradient — «дышащие» пятна ---------- */
-.hero__mesh {
-  position: absolute;
-  inset: -8%;
-  z-index: 0;
-  filter: blur(36px);
-  will-change: transform;
-}
-.hero__mesh-spot {
-  position: absolute;
-  border-radius: 50%;
-  will-change: transform;
-}
-.hero__mesh-spot--blue {
-  width: 58%;
-  height: 58%;
-  top: 4%;
-  left: 6%;
-  background: #55b8ff;
-  opacity: 0.09;
-  animation: mesh-a 26s ease-in-out infinite alternate;
-}
-.hero__mesh-spot--white {
-  width: 52%;
-  height: 52%;
-  bottom: 2%;
-  right: 4%;
-  background: #ffffff;
-  opacity: 0.07;
-  animation: mesh-b 30s ease-in-out infinite alternate;
-}
-.hero__mesh-spot--cyan {
-  width: 44%;
-  height: 44%;
-  top: 34%;
-  right: 18%;
-  background: #aef0ff;
-  opacity: 0.08;
-  animation: mesh-c 22s ease-in-out infinite alternate;
-}
-@keyframes mesh-a {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(3%, 2%) scale(1.05); }
-}
-@keyframes mesh-b {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(-3%, -2%) scale(1.06); }
-}
-@keyframes mesh-c {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(2%, -3%) scale(1.04); }
-}
-
-/* ---------- Слой 2: большое мягкое голубое свечение ---------- */
-.hero__glow {
-  position: absolute;
-  inset: -6%;
-  z-index: 0;
-  background: radial-gradient(
-    circle,
-    rgba(85, 184, 255, 0.3) 0%,
-    rgba(85, 184, 255, 0.18) 35%,
-    rgba(85, 184, 255, 0.08) 60%,
-    transparent 80%
-  );
-  filter: blur(100px);
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: layer-in 0.7s ease 0.05s forwards;
-}
-
-/* ---------- Слой 3: стеклянные карточки документов ---------- */
-.hero__cards {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-.hero__card {
-  position: absolute;
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: card-in 0.7s ease forwards;
-}
-.hero__card-inner {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  transform: rotate(var(--rot, 0deg));
-  will-change: transform;
-}
-.hero__card-title {
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: rgba(12, 127, 176, 0.65);
-}
-.hero__card-line {
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(12, 127, 176, 0.16);
-}
-.hero__card-line--short {
-  width: 55%;
-}
-.hero__card-chip {
-  width: 22px;
-  height: 16px;
-  margin-top: 2px;
-  border-radius: 3px;
-  background: linear-gradient(135deg, rgba(85, 184, 255, 0.35), rgba(174, 240, 255, 0.2));
-  align-self: flex-start;
-}
-.hero__card-photo {
-  flex: 1;
-  border-radius: 8px;
-  background: linear-gradient(160deg, rgba(85, 184, 255, 0.3), rgba(255, 255, 255, 0.1));
-}
-/* Паспорт — слева сверху */
-.hero__card--passport {
-  width: 124px;
-  height: 80px;
-  top: 8%;
-  left: -3%;
-  animation-delay: 0.55s;
-}
-/* Водительское удостоверение — справа сверху */
-.hero__card--license {
-  width: 134px;
-  height: 72px;
-  top: 16%;
-  right: -5%;
-  animation-delay: 0.65s;
-}
-/* Полароид — слева снизу */
-.hero__card--polaroid {
-  width: 92px;
-  height: 108px;
-  bottom: 12%;
-  left: 3%;
-  animation-delay: 0.75s;
-}
-/* Фото 3×4 — справа снизу */
-.hero__card--photo {
-  width: 74px;
-  height: 100px;
-  bottom: 18%;
-  right: 5%;
-  animation-delay: 0.85s;
-}
-@keyframes card-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes layer-in {
-  to { opacity: 1; }
-}
-
-/* ---------- Слой 4: фото девушки — проявляется после свечения ---------- */
-.hero__image {
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: layer-in 0.8s ease 0.3s forwards;
-}
-
-/* На узких экранах убираем карточки и mesh — оставляем glow + фото */
-@media (max-width: 991px) {
-  .hero__cards,
-  .hero__mesh {
-    display: none;
-  }
-}
-
-/* ---------- prefers-reduced-motion: всё статично ---------- */
-@media (prefers-reduced-motion: reduce) {
-  .hero__mesh-spot,
-  .hero__card,
-  .hero__glow,
-  .hero__image {
-    animation: none !important;
-  }
-  .hero__glow,
-  .hero__image {
-    opacity: 1;
-  }
-  .hero__card {
-    opacity: 0.22;
-  }
-}
-
-/* =========================================================
-   КНОПКИ — shimmer-sweep на hover
-   ========================================================= */
-.btn {
-  position: relative;
-  overflow: hidden;
-}
-.btn--primary::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-  transform: skewX(-20deg);
-  transition: left 0.6s ease;
-}
-.btn--primary:hover::after {
-  left: 130%;
-}
-
-/* Пульсация у мобильной CTA */
-.mobile-cta {
-  animation: cta-pulse 2.6s ease-in-out infinite;
-}
-@keyframes cta-pulse {
-  0%,
-  100% {
-    box-shadow: 0 -10px 24px -16px rgba(0, 0, 0, 0.4);
-  }
-  50% {
-    box-shadow: 0 -10px 30px -10px rgba(98, 204, 255, 0.8);
-  }
-}
-
-/* =========================================================
-   БЕГУЩАЯ СТРОКА (типы документов)
-   ========================================================= */
-.marquee {
-  background: var(--color-black);
-  color: #fff;
-  padding: 18px 0;
-  overflow: hidden;
-  position: relative;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-.marquee__track {
-  display: flex;
-  gap: 0;
-  width: max-content;
-  animation: marquee 28s linear infinite;
-}
-.marquee:hover .marquee__track {
-  animation-play-state: paused;
-}
-.marquee__item {
-  display: inline-flex;
-  align-items: center;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
-  padding: 0 28px;
-  white-space: nowrap;
-}
-.marquee__item span {
-  color: var(--color-accent);
-  margin-left: 28px;
-  font-size: 12px;
-}
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* =========================================================
-   МЕТРИКИ — анимированные счётчики
-   ========================================================= */
-.metrics {
-  background: linear-gradient(180deg, var(--color-gray-50) 0%, #ffffff 100%);
-  padding: 72px 0;
-}
-.metrics__container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 32px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-.metric {
-  text-align: center;
-  padding: 28px 16px;
-  border-radius: var(--radius-lg);
-  background: #fff;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.metric:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card);
-}
-.metric__value {
-  font-size: clamp(38px, 4vw, 54px);
-  font-weight: 700;
-  line-height: 1;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-  background: linear-gradient(120deg, var(--color-accent-darker), var(--color-accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.03em;
-}
-.metric__value span {
-  display: inline-block;
-  min-width: 3ch;
-  text-align: center;
-}
-.metric__label {
-  margin-top: 10px;
-  font-size: 15px;
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-
-/* =========================================================
-   КАРТОЧКИ — glow + tilt + анимация иконок
-   ========================================================= */
-.advantage-card,
-.process-step,
-.contact-card {
-  position: relative;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-.advantage-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--color-accent), transparent 60%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.advantage-card:hover::before {
-  opacity: 1;
-}
-.advantage-card__icon {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
-}
-.advantage-card:hover .advantage-card__icon {
-  transform: translateY(-4px) rotate(-6deg) scale(1.08);
-  background: var(--color-accent);
-  color: #fff;
-}
-
-/* Шаги процесса — градиент в цифрах при hover */
-.process-step {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.process-step:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card);
-}
-.process-step__num {
-  transition: transform 0.35s ease, box-shadow 0.3s ease;
-}
-.process-step:hover .process-step__num {
-  transform: scale(1.08) rotate(-4deg);
-  box-shadow: 0 12px 24px -10px rgba(98, 204, 255, 0.6);
-}
-
-/* =========================================================
-   PRICING — фоновое видео + анимированный градиент-фолбэк
-   ========================================================= */
-.pricing {
-  position: relative;
-  isolation: isolate;
-}
-/* Фолбэк: анимированный градиентный mesh — виден, пока нет видео */
-.pricing::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(98, 204, 255, 0.22), transparent 45%),
-    radial-gradient(circle at 80% 30%, rgba(30, 162, 218, 0.18), transparent 45%),
-    radial-gradient(circle at 50% 90%, rgba(12, 127, 176, 0.25), transparent 50%);
-  animation: pricing-mesh 16s ease-in-out infinite alternate;
-}
-@keyframes pricing-mesh {
-  0% {
-    background-position: 0% 0%, 100% 0%, 50% 100%;
-    transform: scale(1);
-  }
-  100% {
-    background-position: 30% 20%, 70% 40%, 40% 70%;
-    transform: scale(1.05);
-  }
-}
-.pricing__bg-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  opacity: 0.65;
-  pointer-events: none;
-}
-.pricing__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(180deg, rgba(20, 22, 27, 0.4) 0%, rgba(20, 22, 27, 0.62) 100%);
-}
-.pricing__container {
-  position: relative;
-  z-index: 1;
-}
-
-/* Светящаяся анимированная рамка у популярной карточки */
-.price-card--popular {
-  position: relative;
-}
-.price-card--popular::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: conic-gradient(
-    from var(--angle, 0deg),
-    var(--color-accent),
-    transparent 40%,
-    var(--color-accent-darker),
-    transparent 80%,
-    var(--color-accent)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: rotate-border 6s linear infinite;
-  pointer-events: none;
-}
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-@keyframes rotate-border {
-  to {
-    --angle: 360deg;
-  }
-}
-
-/* =========================================================
-   SCROLLSPY — активный пункт меню
-   ========================================================= */
-.main-nav__list a.is-active {
-  color: var(--color-accent-darker);
-}
-.main-nav__list a.is-active::after {
-  width: 100%;
-}
-
-/* =========================================================
-   СТАГГЕРИРОВАННОЕ ПОЯВЛЕНИЕ (кASKAD)
-   ========================================================= */
-.advantages__grid .advantage-card:nth-child(1) {
-  transition-delay: 0s;
-}
-.advantages__grid .advantage-card:nth-child(2) {
-  transition-delay: 0.08s;
-}
-.advantages__grid .advantage-card:nth-child(3) {
-  transition-delay: 0.16s;
-}
-.advantages__grid .advantage-card:nth-child(4) {
-  transition-delay: 0.24s;
-}
-.advantages__grid .advantage-card:nth-child(5) {
-  transition-delay: 0.32s;
-}
-.advantages__grid .advantage-card:nth-child(6) {
-  transition-delay: 0.4s;
-}
-
-.process__list .process-step:nth-child(1) {
-  transition-delay: 0s;
-}
-.process__list .process-step:nth-child(2) {
-  transition-delay: 0.1s;
-}
-.process__list .process-step:nth-child(3) {
-  transition-delay: 0.2s;
-}
-.process__list .process-step:nth-child(4) {
-  transition-delay: 0.3s;
-}
-
-.pricing__grid .price-card:nth-child(1) {
-  transition-delay: 0s;
-}
-.pricing__grid .price-card:nth-child(2) {
-  transition-delay: 0.12s;
-}
-.pricing__grid .price-card:nth-child(3) {
-  transition-delay: 0.24s;
-}
-
-/* =========================================================
-   ДЕКОР-МОБАЙЛ
-   ========================================================= */
-@media (max-width: 992px) {
-  .metrics__container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .hero__lens {
-    display: none;
-  }
-}
-
-/* =========================================================
-   HERO — анимированный SVG-объектив (диафрагма)
-   Тематика: фотокамера, съёмка на документы
-   ========================================================= */
-.hero__lens {
-  position: absolute;
-  top: -52px;
-  right: -34px;
-  width: 200px;
-  height: 200px;
-  z-index: 3;
-  filter: drop-shadow(0 18px 30px rgba(15, 23, 42, 0.45));
-  animation: lens-float 7s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes lens-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-3deg);
-  }
-  50% {
-    transform: translateY(-14px) rotate(2deg);
-  }
-}
-.lens-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* внешнее свечение */
-.lens-aura {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: lens-aura-pulse 4s ease-in-out infinite;
-}
-@keyframes lens-aura-pulse {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 0.42;
-    transform: scale(1.04);
-  }
-}
-
-/* вращающееся кольцо фокуса (засечки) */
-.lens-focus-ring {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: lens-spin 16s linear infinite;
-}
-@keyframes lens-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* свечение под лепестками */
-.lens-core {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: lens-core-pulse 3.2s ease-in-out infinite;
-}
-@keyframes lens-core-pulse {
-  0%,
-  100% {
-    opacity: 0.85;
-    transform: scale(0.92);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-}
-
-/* лепестки диафрагмы — открывание/закрывание */
-.lens-blade {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: lens-iris 6s ease-in-out infinite;
-}
-@keyframes lens-iris {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  45%,
-  55% {
-    transform: scale(0.5);
-  }
-}
-
-/* блик зрачка */
-.lens-pupil-glow {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: lens-aura-pulse 3.2s ease-in-out infinite;
-}
-
-/* искры-вспышки */
-.sparkle {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: sparkle 2.6s ease-in-out infinite;
-}
-.sparkle--2 {
-  animation-delay: 0.8s;
-}
-.sparkle--3 {
-  animation-delay: 1.6s;
-}
-.sparkle--4 {
-  animation-delay: 1.2s;
-}
-@keyframes sparkle {
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__lens,
-  .lens-aura,
-  .lens-focus-ring,
-  .lens-core,
-  .lens-blade,
-  .lens-pupil-glow,
-  .sparkle {
-    animation: none;
-  }
-}
-
-@media (max-width: 576px) {
-  .metrics {
-    padding: 48px 0;
-  }
-  .metrics__container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    padding: 0 18px;
-  }
-  .metric {
-    padding: 22px 10px;
-  }
-  .metric__value {
-    font-size: clamp(28px, 7vw, 38px);
-  }
-  .marquee__item {
-    font-size: 15px;
-    padding: 0 20px;
-  }
-}
-
-/* ===== Hero intro animation ===== */
-.hero-anim {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 28px 16px 8px;
-  text-align: center;
-  color: var(--color-accent-darker);
-}
-.hero-anim__svg {
-  width: 100%;
-  max-width: 560px;
-  height: auto;
-}
-@media (max-width: 576px) {
-  .hero-anim {
-    padding: 16px 12px 4px;
-  }
-  .hero-anim__svg {
-    max-width: 440px;
-  }
-}
-
-/* =========================================================
-   НАВИГАЦИЯ — компактный pill-стиль (фишка)
-   Пункты собраны в плавающую скруглённую плашку с подсветкой
-   ========================================================= */
-.main-nav__list {
-  gap: 4px;
-  padding: 5px;
-  background: rgba(98, 204, 255, 0.07);
-  border: 1px solid rgba(98, 204, 255, 0.15);
-  border-radius: 999px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-.main-nav__list a {
-  padding: 8px 14px;
-  border-radius: 999px;
-  transition: color 0.25s ease, background-color 0.25s ease;
-}
-/* убираем старое подчёркивание — заменяем на pill-фон */
-.main-nav__list a::after {
-  display: none;
-}
-.main-nav__list a:hover {
-  background: var(--color-accent-light);
-  color: var(--color-accent-darker);
-}
-/* активный пункт (scrollspy) — заполненный pill */
-.main-nav__list a.is-active {
-  background: var(--color-accent);
-  color: var(--color-black);
-  font-weight: 600;
-}
-
-/* На мобильном меню (выезд справа) — возвращаем обычный вид */
-@media (max-width: 992px) {
-  .main-nav__list {
-    gap: 22px;
-    padding: 0;
-    background: none;
-    border: none;
-    border-radius: 0;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  .main-nav__list a {
-    padding: 0;
-    border-radius: 0;
-    font-size: 19px;
-  }
-  .main-nav__list a:hover,
-  .main-nav__list a.is-active {
-    background: none;
-    color: var(--color-accent-darker);
-  }
-}
-
-/* =========================================================
-   МОБИЛЬНОЕ МЕНЮ — надёжный off-canvas (панель не залезает
-   на контент: скрыта visibility + pointer-events + сдвиг 105%)
-   ========================================================= */
-@media (max-width: 992px) {
-  .main-nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    height: 100dvh;
-    width: min(86vw, 360px);
-    max-width: 360px;
-    background: #ffffff;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 104px 26px 40px;
-    /* гарантированно прячем панель за правый край */
-    transform: translateX(105%);
-    visibility: hidden;
-    pointer-events: none;
-    transition: transform 0.35s ease, visibility 0s linear 0.35s;
-    z-index: 1100;
-    overflow-y: auto;
-    box-shadow: none;
-  }
-  .main-nav.is-open {
-    transform: translateX(0);
-    visibility: visible;
-    pointer-events: auto;
-    box-shadow: -20px 0 50px -20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.35s ease, visibility 0s linear 0s;
-  }
-  /* overlay поверх контента, под панелью */
-  .nav-overlay {
-    z-index: 2;
-  }
-  /* бургер всегда поверх панели и overlay */
-  .burger {
-    z-index: 1150;
-  }
-}
-
-/* =========================================================
-   GLASSMORPHISM — карточки тарифов прозрачные, через них
-   видно фоновое видео (только в секции с видео)
-   ========================================================= */
-/* Современные браузеры: применяем стекло только там, где есть видео */
-.pricing:has(.pricing__bg-video) .price-card,
-.pricing:has(.pricing__bg-video) .pricing__extra {
-  background: rgba(32, 36, 44, 0.48);
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-}
-.pricing:has(.pricing__bg-video) .price-card--popular {
-  background: rgba(38, 46, 58, 0.55);
-  border-color: rgba(98, 204, 255, 0.7);
-}
-/* Фолбэк для браузеров без :has — карточки стекла везде в pricing */
-@supports not selector(:has(*)) {
-  .pricing .price-card,
-  .pricing .pricing__extra {
-    background: rgba(32, 36, 44, 0.55);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-  }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .btn:active, .btn:hover, .advantage-card:hover { transform: none; }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .hero__container { grid-template-columns: 1.1fr .9fr; }
+  .hero__title { font-size: 40px; }
+  .hero__photo-frame, .hero__caption { width: 100%; }
+  .hero__cta { flex-direction: column; }
+  .advantages__grid, .process__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .advantage-card { padding: 24px; }
 }

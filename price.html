@@ -9,27 +9,23 @@
     />
     <title>Прайс-лист — PHOTO ID</title>
     <link rel="icon" href="images/logo.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="theme-color" content="#f8fafc" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/effects.css" />
   </head>
   <body>
+    <a href="#main" class="visually-hidden">Перейти к содержимому</a>
     <header class="site-header" id="site-header">
       <div class="site-header__container">
         <a href="index.html" class="logo">
           <img src="images/logo.svg" alt="PHOTO ID — фото на документы" width="140" height="58" />
         </a>
 
-        <nav class="main-nav" id="main-nav">
+        <nav class="main-nav" id="main-nav" aria-label="Основная навигация">
           <ul class="main-nav__list">
             <li><a href="index.html#advantages">Преимущества</a></li>
             <li><a href="index.html#examples">Примеры работ</a></li>
-            <li><a href="index.html#process">Как это работает</a></li>
+            <li><a href="price.html" aria-current="page">Цены</a></li>
             <li><a href="index.html#reviews">Отзывы</a></li>
             <li><a href="index.html#contacts">Контакты</a></li>
           </ul>
@@ -45,7 +41,7 @@
               </svg>
               <span>+7 (923) 496‒82‒31</span>
             </a>
-            <a href="index.html#contacts" class="btn btn--primary btn--sm">связаться с нами</a>
+            <a href="index.html#contacts" class="btn btn--primary btn--sm">Связаться</a>
           </div>
         </nav>
 
@@ -57,7 +53,7 @@
 
     <div class="nav-overlay" id="nav-overlay"></div>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="price-hero">
         <div class="price-hero__container">
           <a href="index.html" class="back-link">
@@ -66,7 +62,7 @@
             </svg>
             На главную
           </a>
-          <p class="eyebrow">Прайс-лист</p>
+          <p class="eyebrow">Прайс-лист студии</p>
           <h1 class="price-hero__title">Цены на услуги</h1>
           <p class="price-hero__text">
             Фото на документы, печать, ксерокопии, сканирование и полиграфия — собрали все цены студии PHOTO ID на одной
@@ -75,7 +71,7 @@
         </div>
       </section>
 
-      <section class="pricing" aria-label="Фото на документы — пакеты">
+      <section class="pricing" id="document-prices" aria-label="Фото на документы — пакеты">
         <div class="pricing__container">
           <h2 class="common-title">Фото на документы</h2>
 
@@ -88,7 +84,7 @@
                 <li>Печать или электронный вариант</li>
                 <li>Лёгкая ретушь кожи</li>
               </ul>
-              <a href="index.html#contacts" class="btn btn--outline btn--block">связаться с нами</a>
+              <a href="index.html#contacts" class="btn btn--outline btn--block">Связаться</a>
             </article>
 
             <article class="price-card price-card--popular">
@@ -100,7 +96,7 @@
                 <li>Профессиональная ретушь: асимметрия, тон кожи, неровности, акне</li>
                 <li>Печать и электронный вид в высоком качестве</li>
               </ul>
-              <a href="index.html#contacts" class="btn btn--primary btn--block">связаться с нами</a>
+              <a href="index.html#contacts" class="btn btn--primary btn--block">Связаться</a>
             </article>
           </div>
         </div>
@@ -108,8 +104,20 @@
 
       <section class="price-section">
         <div class="price-section__container">
+          <nav class="price-categories" aria-label="Разделы прайса">
+            <a href="#document-prices">Фото на документы</a>
+            <a href="#extras">Дополнительно</a>
+            <a href="#photo-print">Печать фотографий</a>
+            <a href="#document-print">Печать документов</a>
+            <a href="#scan">Сканирование</a>
+            <a href="#lamination">Ламинирование</a>
+            <a href="#binding">Брошюрирование</a>
+            <a href="#printing">Полиграфия</a>
+            <a href="#gifts">Сувенирная продукция</a>
+            <a href="#other">Другие услуги</a>
+          </nav>
           <div class="price-grid">
-            <article class="price-block">
+            <article class="price-block" id="extras">
               <h2 class="price-block__title">Дополнительно</h2>
               <ul class="price-table">
                 <li class="price-row"><span>Электронный вариант готовой фотографии</span><b>150 ₽</b></li>
@@ -117,13 +125,13 @@
                 <li class="price-row"><span>Фото-портрет для сайта, личного дела</span><b>600 ₽/шт.</b></li>
                 <li class="price-row"><span>Обработка / доработка фото</span><b>500 ₽/шт.</b></li>
                 <li class="price-row"><span>Печать комплекта с электронного носителя</span><b>300 ₽</b></li>
-                <li class="price-row"><span>Фото на документы для вашего питомца</span><b>600 ₽</b></li>
+                <li class="price-row"><span>Фото на паспорт для вашего питомца</span><b>600 ₽</b></li>
                 <li class="price-row"><span>Дополнительный комплект фото</span><b>100 ₽</b></li>
                 <li class="price-row"><span>Другой формат комплекта</span><b>200 ₽</b></li>
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="photo-print">
               <h2 class="price-block__title">Печать фотографий</h2>
               <ul class="price-table">
                 <li class="price-row"><span>Формат 10×15 (А6)</span><b>от 20 ₽</b></li>
@@ -136,50 +144,50 @@
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="document-print">
               <h2 class="price-block__title">Печать документов / ксерокопия</h2>
 
               <h3 class="price-group-title">A4</h3>
-              <h3 class="price-group-title">Чёрно-белая, 1 прогон <b>15 ₽</b></h3>
+              <h3 class="price-group-title">Чёрно-белая <b>15 ₽</b></h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>от 100 шт.</span><b>13 ₽</b></li>
-                <li class="price-row"><span>от 200 шт.</span><b>10 ₽</b></li>
+                <li class="price-row"><span>от 100 листов</span><b>13 ₽</b></li>
+                <li class="price-row"><span>от 200 листов</span><b>10 ₽</b></li>
               </ul>
               <h3 class="price-group-title">Цветная, текст <b>25 ₽</b></h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>от 100 шт.</span><b>23 ₽</b></li>
-                <li class="price-row"><span>от 200 шт.</span><b>20 ₽</b></li>
+                <li class="price-row"><span>от 100 листов</span><b>23 ₽</b></li>
+                <li class="price-row"><span>от 200 листов</span><b>20 ₽</b></li>
               </ul>
               <h3 class="price-group-title">Цветная, картинки <b>35 ₽</b></h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>от 100 шт.</span><b>30 ₽</b></li>
-                <li class="price-row"><span>от 200 шт.</span><b>25 ₽</b></li>
+                <li class="price-row"><span>от 100 листов</span><b>30 ₽</b></li>
+                <li class="price-row"><span>от 200 листов</span><b>25 ₽</b></li>
               </ul>
 
               <h3 class="price-group-title">A3</h3>
-              <h3 class="price-group-title">Чёрно-белая, 1 прогон <b>25 ₽</b></h3>
+              <h3 class="price-group-title">Чёрно-белая <b>25 ₽</b></h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>от 100 шт.</span><b>22 ₽</b></li>
-                <li class="price-row"><span>от 200 шт.</span><b>20 ₽</b></li>
+                <li class="price-row"><span>от 100 листов</span><b>22 ₽</b></li>
+                <li class="price-row"><span>от 200 листов</span><b>20 ₽</b></li>
               </ul>
               <h3 class="price-group-title">Цветная, текст <b>45 ₽</b></h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>от 100 шт.</span><b>40 ₽</b></li>
-                <li class="price-row"><span>от 200 шт.</span><b>35 ₽</b></li>
+                <li class="price-row"><span>от 100 листов</span><b>40 ₽</b></li>
+                <li class="price-row"><span>от 200 листов</span><b>35 ₽</b></li>
               </ul>
               <h3 class="price-group-title">Цветная, картинки <b>70 ₽</b></h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>от 100 шт.</span><b>60 ₽</b></li>
-                <li class="price-row"><span>от 200 шт.</span><b>40 ₽</b></li>
+                <li class="price-row"><span>от 100 листов</span><b>60 ₽</b></li>
+                <li class="price-row"><span>от 200 листов</span><b>40 ₽</b></li>
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="scan">
               <h2 class="price-block__title">Сканирование</h2>
               <h3 class="price-group-title">Документы</h3>
               <ul class="price-table price-table--sub">
-                <li class="price-row"><span>1 прогон</span><b>25 ₽</b></li>
-                <li class="price-row"><span>от 50 шт.</span><b>23 ₽</b></li>
+                <li class="price-row"><span>1 лист</span><b>25 ₽</b></li>
+                <li class="price-row"><span>от 50 листов</span><b>23 ₽</b></li>
               </ul>
               <h3 class="price-group-title">Фото</h3>
               <ul class="price-table price-table--sub">
@@ -188,7 +196,7 @@
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="lamination">
               <h2 class="price-block__title">Ламинирование</h2>
               <ul class="price-table price-table--sub">
                 <li class="price-row"><span>A5 / A4, глянцевая</span><b>50 / 60 ₽</b></li>
@@ -197,7 +205,7 @@
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="binding">
               <h2 class="price-block__title">Брошюрирование</h2>
               <ul class="price-table price-table--sub">
                 <li class="price-row"><span>Переплёт на пластиковую пружину, до 49 листов</span><b>180 ₽</b></li>
@@ -206,7 +214,7 @@
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="printing">
               <h2 class="price-block__title">Полиграфия</h2>
               <h3 class="price-group-title">Визитки</h3>
               <ul class="price-table price-table--sub">
@@ -221,7 +229,7 @@
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="gifts">
               <h2 class="price-block__title">Сувенирная продукция</h2>
               <ul class="price-table">
                 <li class="price-row"><span>Футболка (вторая сторона +250 ₽)</span><b>1620 ₽</b></li>
@@ -242,18 +250,19 @@
               </ul>
             </article>
 
-            <article class="price-block">
+            <article class="price-block" id="other">
               <h2 class="price-block__title">Другие услуги</h2>
               <ul class="price-table">
-                <li class="price-row"><span>Запись на DVD (до 700 МБ)</span><b>300 ₽</b></li>
-                <li class="price-row"><span>Перенос файлов с DVD на USB / Email (500 МБ)</span><b>80 ₽</b></li>
+                <li class="price-row"><span>Запись / копирование DVD (до 700 МБ)</span><b>300 ₽</b></li>
                 <li class="price-row"><span>Услуги дизайнера</span><b>от 1200 ₽</b></li>
-                <li class="price-row"><span>Печать баннеров / большие размеры фото</span><b>уточнять</b></li>
+                <li class="price-row"><span>Печать баннеров / большие размеры фото</span><b>Уточнить у сотрудника</b></li>
+                <li class="price-row"><span>Монтаж ролика до 3 минут</span><b>2000 ₽</b></li>
+                <li class="price-row"><span>Музыкальное слайд-шоу с фото до 3 минут</span><b>1500 ₽</b></li>
                 <li class="price-row"><span>Фотомонтаж / фотоколлаж / метрика / макет</span><b>от 500 ₽/шт.</b></li>
                 <li class="price-row"><span>Реставрация (лёгкая / полная)</span><b>250 / 500 ₽</b></li>
                 <li class="price-row"><span>Редактирование текста / изменение формата файла</span><b>50 / 100 ₽</b></li>
-                <li class="price-row"><span>Оцифровка видеокассеты</span><b>700 ₽/час, далее 10 ₽/мин.</b></li>
-                <li class="price-row"><span>Оцифровка аудиокассеты / аудио на катушке</span><b>500 ₽</b></li>
+                <li class="price-row"><span>Оцифровка видеокассеты</span><b>700 ₽ за первый час, далее 10 ₽/мин.</b></li>
+                <li class="price-row"><span>Оцифровка аудиокассеты / аудио на катушке</span><b>700 ₽ за первый час, далее 10 ₽/мин.</b></li>
                 <li class="price-row"><span>Сканирование фотоплёнки</span><b>500 ₽</b></li>
                 <li class="price-row"><span>Оцифровка слайдов</span><b>60 ₽/кадр</b></li>
               </ul>
@@ -328,7 +337,7 @@
           stroke-linejoin="round"
         />
       </svg>
-      связаться с нами
+      Позвонить в студию
     </a>
 
     <script src="js/main.js" defer></script>

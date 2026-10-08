@@ -1,55 +1,41 @@
-const container = document.querySelector(".compare-container");
-const overlay = document.querySelector(".compare-img.before");
-const slider = document.querySelector(".slider-line");
-
-if (container && overlay && slider) {
-  let isDragging = false;
-
-  function setPercent(percent) {
-    const clamped = Math.max(0, Math.min(percent, 100));
-    overlay.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
-    slider.style.left = clamped + "%";
-    slider.setAttribute("aria-valuenow", String(Math.round(clamped)));
+(() => {
+  "use strict";
+  const container = document.querySelector(".compare-container");
+  const before = container?.querySelector(".compare-img.before");
+  const slider = container?.querySelector(".slider-line");
+  if (!container || !before || !slider) return;
+  let percent = 50;
+  let pointerId = null;
+  function setPercent(value) {
+    percent = Math.max(0, Math.min(value, 100));
+    before.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+    slider.style.left = `${percent}%`;
+    slider.setAttribute("aria-valuenow", String(Math.round(percent)));
+    slider.setAttribute("aria-valuetext", `До обработки: ${Math.round(percent)}%`);
   }
-
-  function percentFromClientX(clientX) {
+  function fromPointer(event) {
     const rect = container.getBoundingClientRect();
-    const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    return (offsetX / rect.width) * 100;
+    if (rect.width > 0) setPercent((event.clientX - rect.left) / rect.width * 100);
   }
-
-  slider.setAttribute("aria-valuemin", "0");
-  slider.setAttribute("aria-valuemax", "100");
-  slider.setAttribute("aria-valuenow", "50");
-
-  slider.addEventListener("pointerdown", (e) => {
-    isDragging = true;
-    slider.setPointerCapture(e.pointerId);
+  container.addEventListener("pointerdown", event => {
+    if (!event.isPrimary || event.button !== 0) return;
+    pointerId = event.pointerId;
+    container.setPointerCapture(pointerId);
+    slider.focus({ preventScroll: true });
+    fromPointer(event);
   });
-
-  slider.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
-    setPercent(percentFromClientX(e.clientX));
+  container.addEventListener("pointermove", event => { if (event.pointerId === pointerId) fromPointer(event); });
+  const stop = () => { pointerId = null; };
+  container.addEventListener("pointerup", stop);
+  container.addEventListener("pointercancel", stop);
+  container.addEventListener("lostpointercapture", stop);
+  slider.addEventListener("keydown", event => {
+    const changes = { ArrowLeft: -5, ArrowDown: -5, ArrowRight: 5, ArrowUp: 5, PageDown: -10, PageUp: 10 };
+    if (event.key === "Home") setPercent(0);
+    else if (event.key === "End") setPercent(100);
+    else if (Object.hasOwn(changes, event.key)) setPercent(percent + changes[event.key]);
+    else return;
+    event.preventDefault();
   });
-
-  slider.addEventListener("pointerup", (e) => {
-    isDragging = false;
-    slider.releasePointerCapture(e.pointerId);
-  });
-
-  container.addEventListener("pointerdown", (e) => {
-    if (e.target === slider || slider.contains(e.target)) return;
-    setPercent(percentFromClientX(e.clientX));
-  });
-
-  slider.addEventListener("keydown", (e) => {
-    const current = parseFloat(slider.style.left) || 50;
-    if (e.key === "ArrowLeft") {
-      setPercent(current - 5);
-      e.preventDefault();
-    } else if (e.key === "ArrowRight") {
-      setPercent(current + 5);
-      e.preventDefault();
-    }
-  });
-}
+  setPercent(percent);
+})();
