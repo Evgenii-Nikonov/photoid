@@ -162,9 +162,17 @@ async function main() {
     assert.equal(await page.locator('.photo-dialog__close').evaluate(el => el === document.activeElement), true);
     await page.keyboard.press('ArrowRight');
     assert.match(await page.locator('.photo-dialog__count').innerText(), /02/);
+    await page.locator('.photo-dialog__image').waitFor({ state: 'visible' });
     for (const width of widths) {
       await page.setViewportSize({ width, height: 900 });
       assert.equal(await page.locator('.photo-dialog').evaluate(el => el.scrollWidth <= el.clientWidth), true, `dialog overflow at ${width}`);
+      const contained = await page.locator('.photo-dialog__image').evaluate(image => {
+        const photo = image.getBoundingClientRect();
+        const wrap = image.parentElement.getBoundingClientRect();
+        return photo.height > 0 && photo.top >= wrap.top - 1 && photo.bottom <= wrap.bottom + 1 && photo.left >= wrap.left - 1 && photo.right <= wrap.right + 1;
+      });
+      assert.equal(contained, true, `whole photo must fit its frame at ${width}`);
+      assert.equal(await page.locator('.photo-dialog').evaluate(el => el.scrollHeight <= el.clientHeight + 1), true, `dialog controls must not be covered at ${width}`);
       await page.screenshot({ path: path.join(output, `photo-dialog-${width}.png`) });
     }
     const axeDialog = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
@@ -178,7 +186,7 @@ async function main() {
     await page.locator('.photo-dialog__prev').click();
     await page.locator('.photo-dialog__image').waitFor({ state: 'visible' });
     await page.locator('.photo-dialog__close').click();
-    report.scenarios.push('photo dialog: keyboard open, arrows, all widths, Escape/focus return, image error/recovery');
+    report.scenarios.push('photo dialog: keyboard open, arrows, whole image and controls fit at all widths, Escape/focus return, image error/recovery');
 
     await page.locator('#reviews').scrollIntoViewIfNeeded();
     await page.locator('#reviews-retry').waitFor({ state: 'visible' });
